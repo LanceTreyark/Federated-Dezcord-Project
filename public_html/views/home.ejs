@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+
+    <title>Dezcord</title>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@LanceTreyark" />
+    <meta name="twitter:title" content="Dezcord" />
+    <meta name="twitter:description" content="Dezcord" />
+    <meta name="twitter:image" content="https://Dezcord.com/resources/card2.png" />
+    <meta name="twitter:creator" content="@LanceTreyark" />
+    <meta property="og:image" content="https://Dezcord.com/resources/card2.png" itemprop="thumbnailUrl" />
+    <meta property="og:title" content="Dezcord" />
+    <meta property="og:url" content="https://Dezcord.com/" />
+    <meta property="og:site_name" content="Dezcord" />
+    <meta property="og:description" content="Dezcord" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../resources/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../resources/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../resources/favicon-16x16.png">
+    <link rel="manifest" href="../resources/site.webmanifest">
+    <link rel="mask-icon" href="../resources/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+
+    <!--My custom Scrollbar settings-->
+    <link href="../resources/scrollbar.css" rel="stylesheet" type="text/css">
+
+    <!-- Tailwind CSS Build -->
+    <link href="../resources/styles.css" rel="stylesheet" type="text/css">
+
+    <!-- Tailwind CSS CDN -->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">-->
+    <!--LOCALLY HOSTED CDN:-->
+    <link href="../resources/tailwind.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Flowbyte CSS CDN -->
+    <!--<link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />-->
+    <!-- Flowbyte CSS CDN Local-->
+    <link href="../resources/flowbite.min.css" rel="stylesheet" type="text/css" />
+
+    <!--<script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>-->
+    <!-- Flowbyte min.js Local-->
+    <script src="../resources/flowbite.min.js"></script>
+
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+    <style>
+        html,
+        body {
+            height: auto;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+
+        /*Login Modal*/
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-form-container,
+        .register-form-container {
+            background-color: #005eff00;
+            height: auto;
+            border-radius: 0.5rem;
+
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            font-size: 3rem;
+            /* Increase the font size */
+            padding: 0.5rem;
+            /* Add some padding */
+        }
+
+        #chart-container {
+            position: relative;
+            height: 50vh;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-953 flex flex-col min-h-screen">
+
+
+
+    <nav class="bg-white border-gray-200 dark:bg-zinc-952">
+
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+
+            <div class="flex items-center space-x-3 rtl:space-x-reverse">
+
+
+
+                <a href="https://Dezcord.com"><img src="../resources/treyarkLogo2.png" class="h-8 "
+                        style="height:30px; border-radius: .25rem; border-width: 1px; border-color: rgba(0,0,0,0);  border-style: solid;"
+                        alt="Dezcord Logo" /></a>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"><a
+                        href="https://Dezcord.com">Dezcord</a></span>
+
+                <!--Theme Toggle-->
+                <button id="theme-toggle" type="button"
+                    class="text-gray-500 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:outline-none focus:ring-gray-200  rounded-lg text-sm p-2.5 ml-3">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                            fill-rule="evenodd" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!--Menu-->
+            <button data-collapse-toggle="navbar-default" type="button"
+                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-0 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                aria-controls="navbar-default" aria-expanded="false">
+
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 1h15M1 7h15M1 13h15" />
+                </svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+
+                <ul
+                    class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-zinc-952 md:dark:bg-zinc-952 dark:border-gray-700">
+                    <li>
+                        <a href="/"
+                            class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                            aria-current="page">Home</a>
+                    </li>
+
+                    <!--<li>
+                        <a href="#"
+                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
+                    </li>-->
+                    <li>
+                        <a href="/privacy-policy"
+                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Privacy
+                            Policy</a>
+                    </li>
+                    <li>
+                        <a href="/tos"
+                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Terms
+                            of Service</a>
+                    </li>
+                    <!--<li>
+                        <a href="#"
+                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+                    </li>-->
+                    <li>
+                        <h1 onclick="showLoginForm()"
+                            class="cursor-pointer block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                            Login</h1>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-20 flex-grow " style="height:80dvh;">
+
+
+        <div class="pt-20  text-center">
+
+            <h1
+                class="mx-1 mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                A Federated Discord Clone</h1>
+            <p class="mx-1 mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+                Dezcord is the concept of a social platform re-imagined
+            </p>
+            <!--<a href="#"
+                class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                Learn more
+                <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9" />
+                </svg>
+            </a>-->
+        </div>
+
+        <div style="max-width:800px; width:75dvw; margin:auto;">
+            <img src="../resources/decentralNet.webp">
+        </div>
+        <div style="width:80dvw; margin:auto; text-align:center;">
+            <h1
+                class="mt-5 mx-1 mb-4 font-extrabold leading-none tracking-tight text-gray-900 text-2xl md:text-4xl  dark:text-white">
+                What is a Federated Server?</h1>
+        </div>
+        <div style="width:80dvw; margin:auto;">
+            <p class="mx-1 mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+                A federated server is a server that operates within a federated network, where multiple servers interact
+                with each other in a decentralized manner. This model allows different servers to communicate and share
+                data while maintaining autonomy. Each server can be managed independently, but they follow common
+                protocols to enable interoperability across the network.
+            </p>
+        </div>
+        </div>
+
+        <div style="height:3rem;"></div>
+        <div
+            class="mx-auto max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <form class="max-w-sm mx-auto" action="https://embedmail.com/submit-form/hUej9TqSbkxyx2fiTbxW"
+                method="POST">
+                <input type="hidden" name="form_title" value="Dezcord_waitlist">
+                <h1 class="text-center dark:text-white text-2xl font-bold mb-4">Join our waitlist!</h1>
+                <div class="mb-5">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+                        email</label>
+                    <input type="email" name="email" id="email"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="name@example.com" required />
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+                        message</label>
+                    <textarea id="message" name="message" rows="4"
+                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Leave a comment..."></textarea>
+                </div>
+                <div style="text-align:center;" class="mt-5">
+                    <button type="Submit" style="width: 10rem;"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Submit</button>
+
+
+            </form>
+        </div>
+
+    </main>
+    <!-- Footer -->
+    <footer class="bg-white  mt-5 shadow  dark:bg-zinc-952" style="width:100%;">
+        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                © 2024 <a href="https://Dezcord.com/" class="hover:underline">Dezcord™</a>. All Rights Reserved.
+            </span>
+            <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+                <!-- <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">About</a>
+                </li>-->
+                <li>
+                    <a href="/privacy-policy" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                </li>
+                <li>
+                    <a href="/tos" class="hover:underline me-4 md:me-6">Terms of Service</a>
+                </li>
+                <!--<li>
+                    <a href="#" class="hover:underline">Contact</a>
+                </li>-->
+            </ul>
+        </div>
+    </footer>
+
+    <div class="login-modal flex" id="loginModal">
+        <div class="login-form-container relative" id="loginForm">
+            <span class="close-button text-white" onclick="hideLoginForm()">&times;</span>
+            <div class="topContainer p-3 text-center bg-gray-700 rounded-md w-72 mx-auto mt-24 mb-12">
+                <div class="mt-3 mb-3">
+                    <p class="text-white cursor-pointer" onclick="showRegisterForm()"><u><b>Need to Sign Up?</b></u></p>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-4">Login</h2>
+                <form action="/login" method="POST">
+                    <div class="px-3 mb-4 flex flex-col items-start">
+                        <label for="email" class="text-white mb-1">Email:</label>
+                        <input class="text-black form-control w-full p-1.5 rounded-md" type="email" name="email"
+                            id="email">
+                    </div>
+                    <div class="px-3 mb-4 flex flex-col items-start">
+                        <label for="password" class="text-white mb-1">Password:</label>
+                        <input class="text-black form-control w-full p-1.5 rounded-md" type="password" name="password"
+                            id="password">
+                    </div>
+                    <input
+                        class="mt-4 bg-gray-700 btn btn-outline-light w-11/12 mx-auto py-1.5 rounded-md border border-white text-white hover:bg-gray-800 cursor-pointer"
+                        type="submit" value="Submit">
+                    <div class="m-2 text-white">or</div>
+                    <div class="jumbotron text-center text-primary">
+                        <a href="/auth/google"
+                            class="mt-1 mb-2 btn btn-light w-11/12 mx-auto py-1.5 rounded-md bg-white text-gray-800 flex items-center justify-center hover:bg-gray-300">
+                            <svg class="mr-2" xmlns="https://www.w3.org/2000/svg" width="19" height="19"
+                                viewBox="0 0 48 48" aria-hidden="true" jsname="jjf7Ff">
+                                <path fill="#4285F4"
+                                    d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z">
+                                </path>
+                                <path fill="#34A853"
+                                    d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z">
+                                </path>
+                                <path fill="#FBBC05"
+                                    d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z">
+                                </path>
+                                <path fill="#EA4335"
+                                    d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z">
+                                </path>
+                                <path fill="none" d="M2 2h44v44H2z"></path>
+                            </svg>
+                            Login with Google
+                        </a>
+                    </div>
+
+                    <div class="mt-3">
+                        <a class="text-purple-500" href="/reset-password">
+                            <p><u>Forgot Password?</u></p>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="register-form-container relative" id="registerForm" style="display: none;">
+            <span class="close-button text-white" onclick="hideLoginForm()">&times;</span>
+            <div class="topContainer p-3 text-center bg-gray-700 rounded-md w-72 mx-auto mt-24 mb-12">
+                <h2 class="text-2xl font-bold text-white mb-4">Sign Up</h2>
+                <form action="/register" method="POST" onsubmit="return validateForm()">
+                    <div class="px-3 mb-4 flex flex-col items-start">
+                        <label for="email" class="text-white">Email:</label>
+                        <input class="text-black form-control w-full p-1.5 rounded-md" type="email" name="email"
+                            id="email">
+                    </div>
+                    <div class="px-3 mb-4 flex flex-col items-start">
+                        <label for="password" class="text-white">Password:</label>
+                        <input class="text-black form-control w-full p-1.5 rounded-md" type="password" name="password"
+                            id="password">
+                    </div>
+
+                    <input
+                        class="mt-4 bg-gray-700 btn btn-outline-light w-11/12 mx-auto py-1.5 rounded-md border border-white text-white hover:bg-gray-800 cursor-pointer"
+                        type="submit" value="Submit">
+                </form>
+                <div class="m-2 text-white">or</div>
+                <div class="jumbotron text-center text-primary">
+                    <a href="/auth/google"
+                        class="mt-1 mb-2 btn btn-light w-11/12 mx-auto py-1.5 rounded-md bg-white text-gray-800 flex items-center justify-center hover:bg-gray-300">
+                        <svg class="mr-2" xmlns="https://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 48 48"
+                            aria-hidden="true" jsname="jjf7Ff">
+                            <path fill="#4285F4"
+                                d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z">
+                            </path>
+                            <path fill="#34A853"
+                                d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z">
+                            </path>
+                            <path fill="#FBBC05"
+                                d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z">
+                            </path>
+                            <path fill="#EA4335"
+                                d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z">
+                            </path>
+                            <path fill="none" d="M2 2h44v44H2z"></path>
+                        </svg>
+                        Login with Google
+                    </a>
+                </div>
+                <div class="mt-3">
+                    <p class="text-white cursor-pointer" onclick="showLoginForm()">
+                        <u>Already have an
+                            account?</u>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Change the icons inside the button based on previous settings
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        var themeToggleBtn = document.getElementById('theme-toggle');
+
+        themeToggleBtn.addEventListener('click', function () {
+
+            // toggle icons inside button
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // if set via local storage previously
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+
+                // if NOT set via local storage previously
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+
+        });
+
+        function showLoginForm() {
+            document.getElementById('loginModal').style.display = 'flex';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        function hideLoginForm() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function showRegisterForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('loginModal');
+            if (event.target === modal) {
+                hideLoginForm();
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

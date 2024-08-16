@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+
+    <title>Dezcord-userPortal</title>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@LanceTreyark" />
+    <meta name="twitter:title" content="sinepanel" />
+    <meta name="twitter:description" content="sinepanel" />
+    <meta name="twitter:image" content="https://sinepanel.com/resources/sinepanelSnap7.png" />
+    <meta name="twitter:creator" content="@LanceTreyark" />
+    <meta property="og:image" content="https://sinepanel.com/resources/sinepanelSnap7.png" itemprop="thumbnailUrl" />
+    <meta property="og:title" content="sinepanel" />
+    <meta property="og:url" content="https://sinepanel.com/" />
+    <meta property="og:site_name" content="sinepanel" />
+    <meta property="og:description" content="sinepanel" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../resources/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../resources/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../resources/favicon-16x16.png">
+    <link rel="manifest" href="../resources/site.webmanifest">
+    <link rel="mask-icon" href="../resources/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!--My custom Scrollbar settings-->
+    <link href="../resources/scrollbar.css" rel="stylesheet" type="text/css">
+
+    <!-- Tailwind CSS Build -->
+    <link href="../resources/styles.css" rel="stylesheet" type="text/css">
+
+    <!-- Tailwind CSS CDN -->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">-->
+    <!--LOCALLY HOSTED CDN:-->
+    <link href="../resources/tailwind.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Flowbyte CSS CDN -->
+    <!--<link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />-->
+    <!-- Flowbyte CSS CDN Local-->
+    <link href="../resources/flowbite.min.css" rel="stylesheet" type="text/css" />
+
+    <!--<script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>-->
+    <!-- Flowbyte min.js Local-->
+    <script src="../resources/flowbite.min.js"></script>
+
+
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+
+    <style>
+        /* Ensure the sidebar takes the full height of the screen */
+        #logo-sidebar {
+            height: 100vh;
+        }
+
+        /* Ensure the profile component sticks to the bottom */
+        #logo-sidebar .profile-container {
+            margin-top: auto;
+        }
+
+
+        /* Default styles (mobile-first) */
+        .topContainer3,
+        .topContainer2,
+        .topContainer {
+            margin-top: 10dvh;
+        }
+
+        /* Styles for larger screens */
+        @media (min-width: 768px) {
+
+            .topContainer3,
+            .topContainer2,
+            .topContainer {
+                margin-top: 20dvh;
+            }
+        }
+
+        .scroll-container {
+            max-height: 15rem;
+        }
+
+
+        /* Styles for larger screens */
+        @media (min-width: 768px) {
+            .scroll-container {
+                max-height: 20rem;
+            }
+        }
+
+
+        /* Styles for the chat messages container */
+        .flex-grow-x {
+            overflow-y: auto;
+            padding-right: 1rem;
+            /* Adjust as needed */
+        }
+
+        /* Ensure the chat input is at the bottom */
+
+        .chatInput {
+            position: sticky;
+            bottom: 0;
+            width: 100%;
+
+            z-index: 10;
+        }
+
+
+        .chatHeader {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 15;
+        }
+
+        /*Login Modal*/
+        .editUserDiv,
+        .createServerDiv {
+            z-index: 42;
+            display: true;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .editUserContainer,
+        .createServerContainer {
+            background-color: #005eff00;
+            height: auto;
+
+            border-radius: 0.5rem;
+
+        }
+
+        .close-button2,
+        .close-button {
+            cursor: pointer;
+            font-size: 2.1rem;
+        }
+    </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-953">
+
+
+    <aside id="logo-sidebar" style="padding-left:4rem;"
+        class="fixed top-0 left-0 z-40 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-zinc-954 dark:border-zinc-955"
+        aria-label="Sidebar">
+
+
+        <!--Current Server Title -->
+        <div class="border-b-2 dark:border-zinc-955" style=" height:3rem;">
+            <ul class="space-y-2 font-medium ">
+                <li class="flex items-center space-x-3">
+                    <span id="currentServerTitle" class="mt-3 mx-5 text-gray-500 dark:text-white">Dezcord</span>
+                </li>
+            </ul>
+        </div>
+
+        <!--Side Bar-->
+        <!--<div class="mt-3 h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-zinc-954 flex flex-col justify-between">-->
+
+        <div class="mt-3 h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-zinc-954">
+
+            <details open>
+                <summary class="cursor-pointer text-gray-900 dark:text-gray-400">TEXT CHANNELS</summary>
+                <ul id="channelList" class="space-y-2 font-medium mt-2">
+                    <!--Channel list items to be dynamically inserted here:-->
+            </details>
+
+
+
+        </div>
+
+
+
+        <nav id="logo-sidebar1" style="width:4rem; z-index:41"
+            class="fixed top-0 left-0  h-screen pt-3  bg-white border-r border-gray-300  dark:bg-zinc-955 dark:border-zinc-955 "
+            aria-label="Sidebar2">
+
+            <!--dezcord button-->
+            <div style="height:3rem; width:3rem; border-radius:50%; margin:auto;"
+                class="flex items-center bg-gray-300 dark:bg-zinc-953 cursor-pointer focus:ring-blue-500 focus-ring-4 hover:bg-gray-600 hover:text-blue-700">
+                <img src="../resources/treyarkLogo2.png" class="" style="margin:auto; height:28px; padding-bottom: 3px"
+                    alt="Dezcord Logo" />
+            </div>
+
+            <!-- Container for server images -->
+            <div id="serverImagesContainer"></div>
+
+            <!--createServer button-->
+            <div class="mt-2">
+                <div style=" height:3rem; width:3rem; border-radius:50%; margin:auto;"
+                    class="cursor-pointer focus-ring-4 hover:bg-blue-200 dark:hover:bg-gray-600 flex items-center bg-gray-300 dark:bg-zinc-953">
+                    <svg style="margin:auto;" class="circleIcon_db6521" aria-hidden="true" role="img"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path fill="rgb(35,165,89)"
+                            d="M13 5a1 1 0 1 0-2 0v6H5a1 1 0 1 0 0 2h6v6a1 1 0 1 0 2 0v-6h6a1 1 0 1 0 0-2h-6V5Z"
+                            class="">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+
+            <!--navServer button-->
+            <div class="mt-2">
+                <div style="height:3rem; width:3rem; border-radius:50%; margin:auto;"
+                    class="flex items-center bg-gray-300 dark:bg-zinc-953">
+                    <svg style="margin:auto;" class="circleIcon_db6521" aria-hidden="true" role="img"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path fill="rgb(35,165,89)" d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" class=""></path>
+                        <path fill="rgb(35,165,89)" fill-rule="evenodd"
+                            d="M23 12a11 11 0 1 1-22 0 11 11 0 0 1 22 0ZM7.74 9.3A2 2 0 0 1 9.3 7.75l7.22-1.45a1 1 0 0 1 1.18 1.18l-1.45 7.22a2 2 0 0 1-1.57 1.57l-7.22 1.45a1 1 0 0 1-1.18-1.18L7.74 9.3Z"
+                            clip-rule="evenodd" class=""></path>
+                    </svg>
+                </div>
+            </div>
+
+
+
+        </nav>
+
+    </aside>
+
+
+
+
+    <!--createServerModal-in-->
+    <div class="flex createServerContainer" id="createServerContainer" style="display:none;">
+        <div class=" createServerDiv relative" id="createServerForm">
+            <div style="width:80dvw; max-width:430px; "
+                class="topContainer  text-center bg-gray-100 dark:bg-zinc-952 rounded-md mx-auto ">
+                <h2 style="text-align:right; padding-right: 1rem;"><span class="close-button dark:text-gray-400"
+                        onclick="hideServerForm()">&times;</span></h2>
+                <h2 class=" text-2xl font-bold dark:text-gray-300">Create Your Server</h2>
+                <p class="dark:text-gray-400 mb-3">Your server is where you and your friends hang out. Make yours and
+                    start talking.</p>
+
+                <!--Scrolling container Here:-->
+                <div class="scroll-container overflow-y-auto px-2 border-gray-300 dark:border-zinc-955"
+                    style="border-style:solid;  border-width:1px;">
+
+                    <!--Button 1-->
+                    <div style="border-style:solid; border-width:1px;" id="createMyOwnServer"
+                        class="hover:bg-blue-200 cursor-pointer rounded-md mb-2 focus-ring-4  dark:focus:ring-gray-500 dark:hover:bg-zinc-951 dark:border-zinc-953">
+                        <h1 class="my-2 ms-4 dark:text-gray-300 font-bold flex items-center justify-between">
+                            <span class="flex items-center">
+                                <img src="../resources/key.svg" class="mr-2">
+                                Create My Own
+                            </span>
+                            <img src="../resources/arrowRight.svg">
+                        </h1>
+                    </div>
+                    <!--Button 1 out-->
+
+                    <p style="text-align:left;" class="dark:text-gray-400 mb-1">Start from a template</p>
+                    <!--Button 2-->
+                    <div style="border-style:solid; border-width:1px;" id="gamingTemplate"
+                        class="hover:bg-blue-200 cursor-pointer rounded-md mb-2 focus-ring-4  dark:focus:ring-gray-500 dark:hover:bg-zinc-951 dark:border-zinc-953">
+                        <h1 class="my-2 ms-4 dark:text-gray-300 font-bold flex items-center justify-between">
+                            <span class="flex items-center">
+                                <img src="../resources/gamer.svg" class="mr-2">
+                                Gaming
+                            </span>
+                            <img src="../resources/arrowRight.svg">
+                        </h1>
+                    </div>
+                    <!--Button 2 out-->
+
+                    <!--Button 3-->
+                    <div style="border-style:solid; border-width:1px;" id="schoolClubTemplate"
+                        class="hover:bg-blue-200 cursor-pointer rounded-md mb-2 focus-ring-4  dark:focus:ring-gray-500 dark:hover:bg-zinc-951 dark:border-zinc-953">
+                        <h1 class="my-2 ms-4 dark:text-gray-300 font-bold flex items-center justify-between">
+                            <span class="flex items-center">
+                                <img src="../resources/flagGuy.svg" class="mr-2">
+                                School Club
+                            </span>
+                            <img src="../resources/arrowRight.svg">
+                        </h1>
+                    </div>
+                    <!--Button 3 out-->
+
+                    <!--Button 4-->
+                    <div style="border-style:solid; border-width:1px;" id="studyGroupTemplate"
+                        class="hover:bg-blue-200 cursor-pointer rounded-md mb-2 focus-ring-4  dark:focus:ring-gray-500 dark:hover:bg-zinc-951 dark:border-zinc-953">
+                        <h1 class="my-2 ms-4 dark:text-gray-300 font-bold flex items-center justify-between">
+                            <span class="flex items-center">
+                                <img src="../resources/backpack.svg" class="mr-2">
+                                Study Group
+                            </span>
+                            <img src="../resources/arrowRight.svg">
+                        </h1>
+                    </div>
+                    <!--Button 4 out-->
+
+                    <!--Button 5-->
+                    <div style="border-style:solid; border-width:1px;" id="friendsTemplate"
+                        class="hover:bg-blue-200 cursor-pointer rounded-md mb-2 focus-ring-4  dark:focus:ring-gray-500 dark:hover:bg-zinc-951 dark:border-zinc-953">
+                        <h1 class="my-2 ms-4 dark:text-gray-300 font-bold flex items-center justify-between">
+                            <span class="flex items-center">
+                                <img src="../resources/friends.svg" class="mr-2">
+                                Friends
+                            </span>
+                            <img src="../resources/arrowRight.svg">
+                        </h1>
+                    </div>
+                    <!--Button 5 out-->
+
+                    <!--Button 6-->
+                    <div style="border-style:solid; border-width:1px;" id="artistsAndCreatorsTemplate"
+                        class="hover:bg-blue-200 cursor-pointer rounded-md mb-2 focus-ring-4  dark:focus:ring-gray-500 dark:hover:bg-zinc-951 dark:border-zinc-953">
+                        <h1 class="my-2 ms-4 dark:text-gray-300 font-bold flex items-center justify-between">
+                            <span class="flex items-center">
+                                <img src="../resources/artists.svg" class="mr-2">
+                                Artists & Creators
+                            </span>
+                            <img src="../resources/arrowRight.svg">
+                        </h1>
+                    </div>
+                    <!--Button 6 out-->
+
+                    <!--Button 7-->
+                    <div style="border-style:solid; border-width:1px;" id="localCommunityTemplate"
+                        class="hover:bg-blue-200 cursor-pointer rounded-md mb-2 focus-ring-4  dark:focus:ring-gray-500 dark:hover:bg-zinc-951 dark:border-zinc-953">
+                        <h1 class="my-2 ms-4 dark:text-gray-300 font-bold flex items-center justify-between">
+                            <span class="flex items-center">
+                                <img src="../resources/comm.svg" class="mr-2">
+                                Local Community
+                            </span>
+                            <img src="../resources/arrowRight.svg">
+                        </h1>
+                    </div>
+                    <!--Button 7 out-->
+
+                    <!--Scrolling container STOP-->
+                </div>
+
+                <div class="dark:bg-zinc-949 py-3 px-1" style="width:100%">
+                    <h2 class=" text-lg font-bold dark:text-gray-300">Have an invite already?</h2>
+                    <button type="button" style="width:95%;"
+                        class="mt-1 dark:text-white bg-gray-300 dark:bg-zinc-700 hover:bg-blue-200 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-sm text-sm px-5 py-2.5 inline-flex justify-center items-center dark:focus:ring-gray-500 dark:hover:bg-zinc-941 me-2 mb-2">
+                        Join a Server
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--createServerModal-out-->
+
+
+
+    <!--customizeServerModal-in-->
+
+    <div class="flex createServerContainer" id="customizeServerContainer" style="display:none;">
+        <div class=" createServerDiv relative" id="createServerForm">
+            <div style="width:80dvw; max-width:430px;"
+                class="topContainer2  text-center bg-gray-100 dark:bg-zinc-952 rounded-md mx-auto ">
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <h2 style="text-align:right; padding-right: 1rem;"><span class="close-button dark:text-gray-400"
+                            onclick="hideCustomizeServerForm()">&times;</span></h2>
+                    <div class="px-2">
+                        <h2 class=" text-2xl font-bold dark:text-gray-300">Customize Your Server</h2>
+                        <p class="dark:text-gray-400 mb-3">Give your new server a personality with a name and an icon.
+                            You can always change it later</p>
+                    </div>
+
+                    <!--Scrolling container Here:-->
+                    <div class="scroll-container overflow-y-auto px-2 border-gray-300 dark:border-zinc-955"
+                        style="border-style:solid;  border-width:1px;">
+
+
+                        <!--Upload Camera SVG-->
+
+                        <div class="my-3">
+                            <input type="file" name="file" id="file" style="display:none;" />
+                            <label for="file">
+                                <img src="../resources/uploadPhoto.svg" class="cursor-pointer" id="upload-icon"
+                                    style="display: inline-block;">
+                            </label>
+                        </div>
+
+                        <!--Scrolling container STOP-->
+                    </div>
+
+                    <div style="width:100%;"
+                        class="chatInput px-5 py-4 bg-white border-r dark:bg-zinc-952 dark:border-zinc-954 border-t border-zinc-400 ">
+                        <div style=" margin:auto;">
+                            <label for="small-input" style="text-align:left; "
+                                class="block mb-2 text-xs font-medium text-gray-900 dark:text-gray-400">SERVER
+                                NAME</label>
+
+                            <input style="width:100%;" type="text" name="serverName" id="serverName"
+                                placeholder="Enter server name"
+                                class=" border rounded-sm bg-white border-r border-gray-500 dark:bg-zinc-700 dark:border-zinc-955 dark:text-white"
+                                required />
+                        </div>
+                        <button type="button" id="createServerBtn" style="width:100%;"
+                            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create
+                            Server</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!--customizeServerModal-out-->
+
+
+
+    <!--UserProfileModal-->
+
+    <!--updateUserProfileModal-in-->
+
+    <div class="flex editUserContainer" id="editUserContainer" style="display:none;">
+        <div class=" editUserDiv relative" id="editUserDiv">
+            <div style="width:80dvw; max-width:430px;"
+                class="topContainer3  text-center bg-gray-100 dark:bg-zinc-952 rounded-md mx-auto ">
+                <form id="editUserForm" enctype="multipart/form-data">
+                    <h2 style="text-align:right; padding-right: 1rem;"><span class="close-button dark:text-gray-400"
+                            onclick="hideEditUserForm()">&times;</span></h2>
+                    <div class="px-2">
+                        <h2 class=" text-2xl font-bold dark:text-gray-300">Edit your profile</h2>
+                        <p class="dark:text-gray-400 mb-3">Edit your user info with a new username and an profile
+                            picture.
+                            You can always change it later</p>
+                    </div>
+
+                    <!--Scrolling container Here:-->
+                    <div class="scroll-container overflow-y-auto px-2 border-gray-300 dark:border-zinc-955"
+                        style="border-style:solid;  border-width:1px;">
+
+
+                        <!--Upload Camera SVG-->
+
+                        <div class="my-3">
+                            <input type="file" name="file2" id="file2" style="display:none;" />
+                            <label for="file2">
+                                <img src="../resources/uploadPhoto.svg" class="cursor-pointer" id="upload-icon2"
+                                    style="display: inline-block;">
+                            </label>
+                        </div>
+
+                        <!--Scrolling container STOP-->
+                    </div>
+
+                    <div style="width:100%;"
+                        class="chatInput px-5 py-4 bg-white border-r dark:bg-zinc-952 dark:border-zinc-954 border-t border-zinc-400 ">
+                        <div style=" margin:auto;">
+                            <label for="small-input" style="text-align:left; "
+                                class="block mb-2 text-xs font-medium text-gray-900 dark:text-gray-400">USER
+                                NAME</label>
+
+                            <input style="width:100%;" type="text" name="userName" id="userName"
+                                placeholder="Enter your new user name"
+                                class=" border rounded-sm bg-white border-r border-gray-500 dark:bg-zinc-700 dark:border-zinc-955 dark:text-white"
+                                required />
+                        </div>
+                        <button type="button" id="editUserBtn" style="width:100%;"
+                            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit
+                            Changes</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!--updateUserProfileModal-out-->
+
+    <!--UserProfileModal out-->
+
+
+    <div class="chatHeader border-b-2 bg-white border-r border-gray-200  dark:bg-zinc-953 dark:border-zinc-954"
+        style=" height:3rem; ">
+
+        <!--openSidebar-->
+        <div class="fixed top-1 left-1">
+            <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+                type="button" style="margin-left:1rem;"
+                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" fill-rule="evenodd"
+                        d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <!--themeButton-->
+        <div class="fixed top-1 right-1">
+            <!--User profile component -in -->
+            <div class="flex items-center mt-auto">
+                <!--themeButton inside in-->
+                <button id="theme-toggle" type="button" style="margin-right:1rem;"
+                    class="text-gray-500 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:outline-none focus:ring-gray-200  rounded-lg text-sm p-2.5 ml-3">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                            fill-rule="evenodd" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <!--themeButton inside out-->
+
+                <div class="flex flex-col w-full px-1 cursor-pointer" id="userNameBtn">
+                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                        <span id="displayUserName"
+                            class="text-sm font-semibold text-gray-900 dark:text-white">user.93fe9ebwew</span>
+                        <img class="w-6 h-6 rounded-full" id="userProfileImage"
+                            src="../resources/purpleDefaultProfile.png" alt="User's Profile image">
+                    </div>
+
+                </div>
+            </div>
+            <!--User profile component -out -->
+
+
+        </div>
+    </div>
+
+    <!--mainDiv-->
+    <div class="pt-1 sm:ml-64">
+
+        <div class="sm:ml-64 flex flex-col min-h-screen " style="margin:auto; ">
+            <!-- Chat Container -->
+            <div class="flex-grow flex-grow-x p-4 mt-10 " style="width:100%; margin:auto; ">
+
+                <!-- Chat message components go here: -->
+
+                <!-- Container to Display Chat Messages -->
+                <div id="chatMessagesContainer"></div>
+
+            </div>
+        </div>
+
+        <!---->
+        <!-- Chat input -->
+
+        <div style="width:100%;"
+            class="chatInput px-5 py-4 bg-white border-r dark:bg-zinc-953 dark:border-zinc-954 border-t border-zinc-400 ">
+            <div style=" margin:auto;">
+                <input id="chatInput" style="width:100%;" type="text" placeholder=""
+                    class=" border rounded-sm bg-white border-r border-gray-500 dark:bg-zinc-700 dark:border-zinc-955 dark:text-white">
+            </div>
+        </div>
+
+        <!--chat area out-->
+    </div>
+
+    <!--Chat messages out /\ -->
+
+
+
+    <script>
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Change the icons inside the button based on previous settings
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        var themeToggleBtn = document.getElementById('theme-toggle');
+
+        themeToggleBtn.addEventListener('click', function () {
+
+            // toggle icons inside button
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // if set via local storage previously
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+
+                // if NOT set via local storage previously
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+
+        });
+
+
+        //EDIT USER IN-
+        // Function to show the modal
+        function showEditUserForm() {
+            document.getElementById('editUserContainer').style.display = 'flex';
+        }
+
+        // Function to hide the modal
+        function hideEditUserForm() {
+            document.getElementById('editUserContainer').style.display = 'none';
+        }
+
+        // Event listener for the button to open the modal
+        document.getElementById('userNameBtn').addEventListener('click', showEditUserForm);
+
+        // Event listener for clicking outside the topContainer to close the modal
+        document.getElementById('editUserContainer').addEventListener('click', function (event) {
+            const topContainer3 = document.querySelector('.topContainer3');
+            if (!topContainer3.contains(event.target)) {
+                hideEditUserForm();
+            }
+        });
+
+        //Listener to display the attached photo in upload
+        document.getElementById('file2').addEventListener('change', function (event) {
+            const file2 = event.target.files[0];
+            if (file2) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const uploadIcon2 = document.getElementById('upload-icon2');
+                    uploadIcon2.src = e.target.result;
+                };
+                reader.readAsDataURL(file2);
+            }
+        });
+        //EDIT USER OUT-
+
+
+        // Function to show the modal
+        function showServerForm() {
+            document.getElementById('createServerContainer').style.display = 'flex';
+        }
+
+        // Function to hide the modal
+        function hideServerForm() {
+            document.getElementById('createServerContainer').style.display = 'none';
+        }
+
+        // Event listener for the button to open the modal
+        document.querySelector('.circleIcon_db6521').parentElement.addEventListener('click', showServerForm);
+
+        // Event listener for clicking outside the topContainer to close the modal
+        document.getElementById('createServerContainer').addEventListener('click', function (event) {
+            const topContainer = document.querySelector('.topContainer');
+            if (!topContainer.contains(event.target)) {
+                hideServerForm();
+            }
+        });
+
+
+        // Function to show the customize server modal and hide the create server modal
+        function showCustomizeServerForm() {
+            document.getElementById('customizeServerContainer').style.display = 'flex';
+            document.getElementById('createServerContainer').style.display = 'none';
+        }
+
+        // Function to hide the customize server modal
+        function hideCustomizeServerForm() {
+            document.getElementById('customizeServerContainer').style.display = 'none';
+        }
+
+        // Event listener for the button to open the customize server modal
+        document.getElementById('createMyOwnServer').addEventListener('click', showCustomizeServerForm);
+
+
+        // Event listener for clicking outside the topContainer to close the customize server modal
+        document.getElementById('customizeServerContainer').addEventListener('click', function (event) {
+            const topContainer = document.querySelector('.topContainer2');
+            if (!topContainer.contains(event.target)) {
+                hideCustomizeServerForm();
+            }
+        });
+
+
+
+
+        //Listener to display the attached photo in upload
+        document.getElementById('file').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const uploadIcon = document.getElementById('upload-icon');
+                    uploadIcon.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+
+
+        function hideCustomizeServerForm() {
+            document.getElementById('customizeServerContainer').style.display = 'none';
+        }
+
+        // Show system notification
+        function showSystemNotification(message) {
+            // Implement your system notification display logic here
+            alert(message); // Replace with your custom notification logic
+        }
+
+
+
+        // Function to refresh the page
+        function refreshPage() {
+            location.reload();
+        }
+
+
+
+
+        /////////////////
+
+        //Customize User Profile logic --in
+        document.getElementById('editUserBtn').addEventListener('click', function () {
+            const userName = document.getElementById('userName').value;
+            if (userName) {
+                const editUserForm = document.getElementById('editUserForm');
+                const formData = new FormData(editUserForm);
+                formData.append('userName', userName);
+
+                fetch('/userImageUpload', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    if (response.ok) {
+                        // Handle successful response
+                        console.log('File uploaded successfully');
+                        hideCustomizeServerForm();
+                        refreshPage();
+                        //fetchUserServers();
+                    } else if (response.status === 409) {
+                        // Handle duplicate server name error
+                        showSystemNotification('User name already exists. Please choose a different name.');
+                    } else {
+                        // Handle other errors
+                        console.error('File upload failed');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Please enter a user name.');
+            }
+        });
+        //Customize User Profile logic --out
+
+        /////////////////
+
+
+
+
+        // Server Creation logic -in
+        document.getElementById('createServerBtn').addEventListener('click', function () {
+            const serverName = document.getElementById('serverName').value;
+            if (serverName) {
+                const form = document.getElementById('uploadForm');
+                const formData = new FormData(form);
+                formData.append('serverName', serverName);
+
+                fetch('/serverImageUpload', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    if (response.ok) {
+                        // Handle successful response
+                        console.log('File uploaded successfully');
+                        hideCustomizeServerForm();
+                        refreshPage();
+                        //fetchUserServers();
+                    } else if (response.status === 409) {
+                        // Handle duplicate server name error
+                        showSystemNotification('Server name already exists. Please choose a different name.');
+                    } else {
+                        // Handle other errors
+                        console.error('File upload failed');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Please enter a server name.');
+            }
+        });
+        // Server Creation logic -out
+
+
+        //Listener to display the attached photo in upload
+        document.getElementById('file').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const uploadIcon = document.getElementById('upload-icon');
+                    uploadIcon.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+
+
+
+        // Function to create a server image component
+        function createServerImage(serverName, attachmentUniqueId) {
+            const serverImagesContainer = document.getElementById('serverImagesContainer');
+
+            // Create container for the image
+            const containerDiv = document.createElement('div');
+            containerDiv.style.height = '3rem'; // Container height
+            containerDiv.style.width = '3rem'; // Container width
+            containerDiv.style.borderRadius = '50%'; // Make container circular
+            containerDiv.style.margin = '0.5rem auto'; // Top and bottom margins, left and right margins are auto
+            containerDiv.style.overflow = 'hidden'; // Hide any overflow
+            containerDiv.className = 'flex items-center bg-gray-300 dark:bg-zinc-953 cursor-pointer focus:ring-blue-500 focus-ring-4 hover:bg-gray-600 hover:text-blue-700'; // Apply styling class
+
+            // Create image element
+            const imgElement = document.createElement('img');
+            imgElement.src = `/userImage/${attachmentUniqueId}`; // Secure endpoint for image
+            imgElement.alt = serverName;
+            imgElement.title = serverName;
+            imgElement.style.height = '80%'; // Image height
+            imgElement.style.width = '80%'; // Image width
+            imgElement.style.margin = "auto";
+            imgElement.style.objectFit = 'cover'; // Cover the container without distortion
+
+            const hoverText = document.createElement('span');
+            hoverText.className = 'sr-only';
+            hoverText.textContent = serverName;
+            containerDiv.appendChild(hoverText);
+
+            // Append image to the container
+            containerDiv.appendChild(imgElement);
+
+            // Append container to the serverImagesContainer
+            serverImagesContainer.appendChild(containerDiv);
+        }
+
+
+        // Function to fetch and render chat messages
+        function fetchChatMessages() {
+            fetch('/fetchChatMessages')
+                .then(response => response.json())
+                .then(data => {
+                    const chatMessagesContainer = document.getElementById('chatMessagesContainer');
+                    chatMessagesContainer.innerHTML = ''; // Clear existing messages
+
+                    data.forEach(message => {
+                        const chatComponent = document.createElement('div');
+                        chatComponent.className = 'mx-5 mb-3 flex items-start gap-2.5';
+
+                        const profileImage = document.createElement('img');
+                        profileImage.id = 'postUserProfilePicture';
+                        profileImage.className = 'w-8 h-8 rounded-full mt-5';
+                        profileImage.src = message.profile_picture; // Use the fetched profile picture URL
+                        profileImage.alt = "User's Profile image";
+
+                        const chatContent = document.createElement('div');
+                        chatContent.className = 'flex flex-col w-full leading-1.5 p-4';
+
+                        const header = document.createElement('div');
+                        header.className = 'flex items-center space-x-2 rtl:space-x-reverse';
+
+                        const userName = document.createElement('span');
+                        userName.id = 'postUserName';
+                        userName.className = 'text-sm font-semibold text-gray-900 dark:text-white';
+                        userName.textContent = message.user_name;
+
+                        const timestamp = document.createElement('span');
+                        timestamp.id = 'postTimestamp';
+                        timestamp.className = 'text-sm font-normal text-gray-500 dark:text-gray-400';
+                        timestamp.textContent = new Date(message.timestamp).toLocaleString();
+
+                        const chatText = document.createElement('p');
+                        chatText.id = 'postChatText';
+                        chatText.className = 'text-sm font-normal py-2.5 text-gray-900 dark:text-white';
+                        chatText.textContent = message.chat_text;
+
+                        header.appendChild(userName);
+                        header.appendChild(timestamp);
+
+                        chatContent.appendChild(header);
+                        chatContent.appendChild(chatText);
+
+                        chatComponent.appendChild(profileImage);
+                        chatComponent.appendChild(chatContent);
+
+                        chatMessagesContainer.appendChild(chatComponent);
+                    });
+                })
+                .catch(error => console.error('Error fetching chat messages:', error));
+        }
+
+        /*
+                // Function to fetch and render chat messages needs to render profile pictures
+                function fetchChatMessages() {
+                    fetch('/fetchChatMessages')
+                        .then(response => response.json())
+                        .then(data => {
+                            const chatMessagesContainer = document.getElementById('chatMessagesContainer');
+                            chatMessagesContainer.innerHTML = ''; // Clear existing messages
+        
+                            data.forEach(message => {
+                                const chatComponent = document.createElement('div');
+                                chatComponent.className = 'mx-5 mb-3 flex items-start gap-2.5';
+        
+                                const profileImage = document.createElement('img');
+                                profileImage.id = 'postUserProfilePicture';
+                                profileImage.className = 'w-8 h-8 rounded-full mt-5';
+                                profileImage.src = '../resources/purpleDefaultProfile.png';
+                                profileImage.alt = "User's Profile image";
+        
+                                const chatContent = document.createElement('div');
+                                chatContent.className = 'flex flex-col w-full leading-1.5 p-4';
+        
+                                const header = document.createElement('div');
+                                header.className = 'flex items-center space-x-2 rtl:space-x-reverse';
+        
+                                const userName = document.createElement('span');
+                                userName.id = 'postUserName';
+                                userName.className = 'text-sm font-semibold text-gray-900 dark:text-white';
+                                userName.textContent = message.user_name;
+        
+                                const timestamp = document.createElement('span');
+                                timestamp.id = 'postTimestamp';
+                                timestamp.className = 'text-sm font-normal text-gray-500 dark:text-gray-400';
+                                timestamp.textContent = new Date(message.timestamp).toLocaleString();
+        
+                                const chatText = document.createElement('p');
+                                chatText.id = 'postChatText';
+                                chatText.className = 'text-sm font-normal py-2.5 text-gray-900 dark:text-white';
+                                chatText.textContent = message.chat_text;
+        
+                                header.appendChild(userName);
+                                header.appendChild(timestamp);
+        
+                                chatContent.appendChild(header);
+                                chatContent.appendChild(chatText);
+        
+                                chatComponent.appendChild(profileImage);
+                                chatComponent.appendChild(chatContent);
+        
+                                chatMessagesContainer.appendChild(chatComponent);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching chat messages:', error));
+                }
+        */
+
+        // Function to refresh DOM
+        function refreshDOM() {
+            fetchChatMessages();
+        }
+
+        // Function to refresh the page
+        function refreshPage() {
+            location.reload();
+        }
+
+
+        // Event listener for chat input submission (assuming an Enter key press)
+        document.getElementById('chatInput').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                submitChatMessage();
+            }
+        });
+
+        // Initial fetch of chat messages when page loads
+        fetchChatMessages();
+
+        // Function to submit chat message
+        function submitChatMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const chatText = chatInput.value;
+            const userNameElement = document.getElementById('displayUserName');
+            const userName = userNameElement ? userNameElement.textContent : 'Unknown User'; // Fetch username from element or default to 'Unknown User'
+
+            fetch('/submitChat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userName, chatText })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        chatInput.value = ''; // Clear the input field
+                        fetchChatMessages(); // Fetch updated chat messages
+                        refreshDOM();
+                        //refreshPage();
+                    } else {
+                        console.error('Error submitting chat message');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            fetch('/fetchDefaultServerChannels')
+                .then(response => response.json())
+                .then(data => {
+                    const channelList = document.getElementById('channelList');
+                    const userNameSpan = document.getElementById('displayUserName');
+                    const userProfileImage = document.getElementById('userProfileImage');
+
+                    // Render channels
+                    data.channels.forEach(channel => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'flex items-center space-x-3 hover:text-white focus-ring-4 hover:bg-blue-200';
+
+                        const iconContainer = document.createElement('div');
+                        iconContainer.setAttribute('aria-label', 'Text icon');
+                        iconContainer.setAttribute('role', 'img');
+                        iconContainer.className = 'iconContainer_d8bfb3';
+
+                        const imgElement = document.createElement('img');
+                        imgElement.src = '../resources/hashIcon.svg'; // Path to your SVG image
+                        imgElement.alt = 'Hashtag Icon';
+                        imgElement.className = 'icon_d8bfb3';
+                        imgElement.setAttribute('width', '24');
+                        imgElement.setAttribute('height', '24');
+
+                        iconContainer.appendChild(imgElement);
+
+                        const spanElement = document.createElement('span');
+                        spanElement.className = 'ms-3 text-gray-500 dark:text-gray-400';
+                        spanElement.textContent = channel.channel_name;
+
+                        listItem.appendChild(iconContainer);
+                        listItem.appendChild(spanElement);
+                        channelList.appendChild(listItem);
+                    });
+
+                    // Render username and profile picture
+                    userNameSpan.textContent = data.username;
+                    userProfileImage.src = data.profilePicture;
+                })
+                .catch(error => console.error('Error fetching default server channels:', error));
+
+            /*
+                        fetch('/fetchDefaultServerChannels')
+                            .then(response => response.json())
+                            .then(data => {
+                                const channelList = document.getElementById('channelList');
+                                const userNameSpan = document.getElementById('displayUserName');
+                                const userProfileImage = document.getElementById('userProfileImage'); // Reference to the profile image element
+            
+                                // Render channels
+                                data.channels.forEach(channel => {
+                                    const listItem = document.createElement('li');
+                                    listItem.className = 'flex items-center space-x-3 hover:text-white focus-ring-4 hover:bg-blue-200';
+            
+                                    const iconContainer = document.createElement('div');
+                                    iconContainer.setAttribute('aria-label', 'Text icon');
+                                    iconContainer.setAttribute('role', 'img');
+                                    iconContainer.className = 'iconContainer_d8bfb3';
+            
+                                    const imgElement = document.createElement('img');
+                                    imgElement.src = '../resources/hashIcon.svg'; // Path to your SVG image
+                                    imgElement.alt = 'Hashtag Icon'; // Alt text for accessibility
+                                    imgElement.className = 'icon_d8bfb3'; // Class for styling if needed
+                                    imgElement.setAttribute('width', '24');
+                                    imgElement.setAttribute('height', '24');
+            
+                                    iconContainer.appendChild(imgElement);
+            
+                                    const spanElement = document.createElement('span');
+                                    spanElement.className = 'ms-3 text-gray-500 dark:text-gray-400';
+                                    spanElement.textContent = channel.channel_name;
+            
+                                    listItem.appendChild(iconContainer);
+                                    listItem.appendChild(spanElement);
+                                    channelList.appendChild(listItem);
+                                });
+            
+                                // Render username
+                                userNameSpan.textContent = data.username;
+            
+                                // Render user profile picture
+                                userProfileImage.src = `/profileImage/${data.profilePicture}`;
+                            })
+                            .catch(error => console.error('Error fetching default server channels:', error));
+            */
+
+
+            /*
+                        //Needs to render profile picture
+                        fetch('/fetchDefaultServerChannels')
+                            .then(response => response.json())
+                            .then(data => {
+                                const channelList = document.getElementById('channelList');
+                                const userNameSpan = document.getElementById('displayUserName');
+            
+                                // Render channels
+                                data.channels.forEach(channel => {
+                                    const listItem = document.createElement('li');
+                                    listItem.className = 'flex items-center space-x-3 hover:text-white focus-ring-4 hover:bg-blue-200';
+            
+                                    const iconContainer = document.createElement('div');
+                                    iconContainer.setAttribute('aria-label', 'Text icon');
+                                    iconContainer.setAttribute('role', 'img');
+                                    iconContainer.className = 'iconContainer_d8bfb3';
+            
+                                    const imgElement = document.createElement('img');
+                                    imgElement.src = '../resources/hashIcon.svg'; // Path to your SVG image
+                                    imgElement.alt = 'Hashtag Icon'; // Alt text for accessibility
+                                    imgElement.className = 'icon_d8bfb3'; // Class for styling if needed
+                                    imgElement.setAttribute('width', '24');
+                                    imgElement.setAttribute('height', '24');
+            
+                                    iconContainer.appendChild(imgElement);
+            
+                                    const spanElement = document.createElement('span');
+                                    spanElement.className = 'ms-3 text-gray-500 dark:text-gray-400';
+                                    spanElement.textContent = channel.channel_name;
+            
+                                    listItem.appendChild(iconContainer);
+                                    listItem.appendChild(spanElement);
+                                    channelList.appendChild(listItem);
+                                });
+            
+                                // Render username
+                                userNameSpan.textContent = data.username;
+                            })
+                            .catch(error => console.error('Error fetching default server channels:', error));
+            
+            */
+
+            // Fetch user servers from backend
+            fetch('/fetchUserServers')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Fetched user servers data:', data); // Log fetched data
+                    // Process fetched data and create server images
+                    data.forEach(server => {
+                        if (server.attachment_unique_id) {
+                            createServerImage(server.server_name, server.attachment_unique_id);
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching user servers:', error);
+                });
+
+            // Example usage
+            //fetchUserServers();
+
+        });
+
+    </script>
+
+</body>
+
+</html>

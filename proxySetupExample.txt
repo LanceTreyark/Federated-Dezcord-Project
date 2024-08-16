@@ -1,0 +1,97 @@
+<IfModule mod_ssl.c>                                                                                                                                                                                                                                                  
+<VirtualHost *:443>
+    ServerAdmin email@example.com
+    ServerName example.com
+    ServerAlias www.example.com
+    DocumentRoot /var/www/example.com/public_html
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+Include /etc/letsencrypt/options-ssl-apache.conf
+SSLCertificateFile /etc/letsencrypt/live/example.com/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/example.com/privkey.pem
+
+
+  ProxyPreserveHost On
+
+      ProxyPass "/" "http://localhost:3010/"
+      ProxyPassReverse "/" "http://localhost:3010/"
+
+      ProxyPass "/check-email" "http://localhost:3010/check-email"
+      ProxyPassReverse "/check-email" "http://localhost:3010/check-email"
+
+      ProxyPass "/privacy-policy" "http://localhost:3010/privacy-policy"
+      ProxyPassReverse "/privacy-policy" "http://localhost:3010/privacy-policy"
+
+      ProxyPass "/tos" "http://localhost:3010/tos"
+      ProxyPassReverse "/tos" "http://localhost:3010/tos"
+
+      ProxyPass "/stripeData" "http://localhost:3010/stripeData"
+      ProxyPassReverse "/stripeData" "http://localhost:3010/stripeData"
+
+      ProxyPass "/user-portal" "http://localhost:3010/user-portal"
+      ProxyPassReverse "/user-portal" "http://localhost:3010/user-portal"
+
+      ProxyPass "/register" "http://localhost:3010/register"
+      ProxyPassReverse "/register" "http://localhost:3010/register"
+
+      ProxyPass "/updateEmail" "http://localhost:3010/updateEmail"
+      ProxyPassReverse "/updateEmail" "http://localhost:3010/updateEmail"
+
+      ProxyPass "/reset-password/" "http://localhost:3010/reset-password/"
+      ProxyPassReverse "/reset-password/" "http://localhost:3010/reset-password/"
+
+      ProxyPass "/reset-form" "http://localhost:3010/reset-form"
+      ProxyPassReverse "/reset-form" "http://localhost:3010/reset-form"
+
+      ProxyPass "/reset-success" "http://localhost:3010/reset-success"
+      ProxyPassReverse "/reset-success" "http://localhost:3010/reset-success"
+
+      ProxyPass "/login" "http://localhost:3010/login"
+      ProxyPassReverse "/login" "http://localhost:3010/login"
+
+      ProxyPass "/standardCheckoutSession" "http://localhost:3010/standardCheckoutSession"
+      ProxyPassReverse "/standardCheckoutSession" "http://localhost:3010/standardCheckoutSession"
+
+      ProxyPass "/resources" "http://localhost:3010/resources"
+      ProxyPassReverse "/resources" "http://localhost:3010/resources"
+
+      ProxyPass "/admin" "http://localhost:3010/admin"
+      ProxyPassReverse "/admin" "http://localhost:3010/admin"
+
+      ProxyPass "/toggle-theme" "http://localhost:3010/toggle-theme"
+      ProxyPassReverse "/toggle-theme" "http://localhost:3010/toggle-theme"
+
+      ProxyPass "/home2" "http://localhost:3010/home2"
+      ProxyPassReverse "/home2" "http://localhost:3010/home2"
+
+      ProxyPass "/serverImageUpload" "http://localhost:3010/serverImageUpload"
+      ProxyPassReverse "/serverImageUpload" "http://localhost:3010/serverImageUpload"
+
+      ProxyPass "/userImage/" "http://localhost:3010/userImage/"
+      ProxyPassReverse "/userImage/" "http://localhost:3010/userImage/"
+
+      ProxyPass "/fetchUserServers" "http://localhost:3010/fetchUserServers"
+      ProxyPassReverse "/fetchUserServers" "http://localhost:3010/fetchUserServers"
+
+      ProxyPass "/fetchDefaultServerChannels" "http://localhost:3010/fetchDefaultServerChannels"
+      ProxyPassReverse "/fetchDefaultServerChannels" "http://localhost:3010/fetchDefaultServerChannels"
+
+      ProxyPass "/submitChat" "http://localhost:3010/submitChat"
+      ProxyPassReverse "/submitChat" "http://localhost:3010/submitChat"
+
+      ProxyPass "/fetchChatMessages" "http://localhost:3010/fetchChatMessages"
+      ProxyPassReverse "/fetchChatMessages" "http://localhost:3010/fetchChatMessages"
+
+      ProxyPass "/userImageUpload" "http://localhost:3010/userImageUpload"
+      ProxyPassReverse "/userImageUpload" "http://localhost:3010/userImageUpload"
+
+      ProxyPass "/profileImage/" "http://localhost:3010/profileImage/"
+      ProxyPassReverse "/profileImage/" "http://localhost:3010/profileImage/"
+
+      #ProxyPass "/" "http://localhost:3010/"
+      #ProxyPassReverse "/" "http://localhost:3010/"
+
+
+</VirtualHost>
+</IfModule>

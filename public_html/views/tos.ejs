@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+
+    <title>Dezcord-TOS</title>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@LanceDezcord" />
+    <meta name="twitter:title" content="Dezcord" />
+    <meta name="twitter:description" content="Dezcord" />
+    <meta name="twitter:image" content="https://Dezcord.com/resources/DezcordSnap3.png" />
+    <meta name="twitter:creator" content="@LanceDezcord" />
+    <meta property="og:image" content="https://Dezcord.com/resources/DezcordSnap3.png" itemprop="thumbnailUrl" />
+    <meta property="og:title" content="Dezcord" />
+    <meta property="og:url" content="https://Dezcord.com/" />
+    <meta property="og:site_name" content="Dezcord" />
+    <meta property="og:description" content="Dezcord" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../resources/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../resources/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../resources/favicon-16x16.png">
+    <link rel="manifest" href="../resources/site.webmanifest">
+    <link rel="mask-icon" href="../resources/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+    <!-- Prism CSS CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
+
+    <style>
+        /* For WebKit browsers like Chrome and Safari */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #2e2d2d;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #4e4c4c;
+            border-radius: 1px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+        body {
+            background-image: url("../resources/backgroundRainbowEffect.png");
+            background-repeat: no-repeat;
+        }
+
+        .code-container {
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #1a202c;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .copy-button:hover {
+            background-color: #2d3748;
+        }
+
+        /*Login Modal*/
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-form-container,
+        .register-form-container {
+            background-color: #005eff00;
+            height: auto;
+            border-radius: 0.5rem;
+
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            font-size: 3rem;
+            /* Increase the font size */
+            padding: 0.5rem;
+            /* Add some padding */
+        }
+
+        .code-container {
+            margin-top: 5rem;
+            /*
+            max-width: 800px;
+            min-width: 300px;
+            */
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            border-style: solid;
+            border-width: 1px;
+            border-color: white;
+            /*padding: 2rem;*/
+            border-radius: 0.35rem;
+            background-color: black;
+        }
+
+        .codeParent {
+            margin-bottom: 5rem;
+            max-width: 1220px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        /* Media query for screens with a max width of 1000px */
+        @media (max-width: 1000px) {
+            .code-container {
+                max-width: 600px !important;
+            }
+
+            .codeParent {
+                max-width: 85% !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white" style="padding:1.5rem;" data-bs-theme="dark">
+    <div style="position: absolute; top: 1rem; left: 1rem; z-index: 2;">
+        <a href="https://Dezcord.com">
+            <img style="width:40px; display: inline-block;" src="../resources/treyarkLogo2.png">
+            <h1 class="text-xl" style="display: inline-block; margin-left: 0.25rem;">Dezcord</h1>
+        </a>
+    </div>
+                                     <!--TOS-->
+                                     <div
+                                     class="topContainer p-3 mx-auto my-20 max-w-7xl bg-opacity-75 bg-black rounded-lg border border-solid border-gray-200">
+                                     <div class="max-w-2xl mx-auto">
+                                         <h2 style="text-align:center;" class="text-white text-3xl font-bold mb-4">
+                                             Terms Of Service</h2>
+                                         <p class="text-left text-gray-300">
+                                             Welcome to Dezcord! By accessing or using our services, you agree to
+                                             comply with and be bound by the following Terms of Service. Please read
+                                             these terms carefully before
+                                             using our service.
+
+                                             <br><br><b>
+                                                 Use of Service:
+                                             </b><br>
+                                             Dezcord provides email routing services for simple form integration.
+                                             By using our service, you agree to abide by these Terms of Service and
+                                             any
+                                             additional terms and conditions
+                                             provided by Dezcord.
+                                             At Dezcord, we uphold rigorous data privacy standards. User data is
+                                             not shared or sold unless mandated by applicable law.
+                                             <br><br><b>Compliance with Legal Requests:</b><br>
+
+                                             We log minimal customer data, in the event that we receive a valid
+                                             subpoena or legal request, we
+                                             may be required to comply by providing any information that we do have.
+                                             <br><br><b>Payment Processing:</b> <br>
+
+                                             If you choose to pay for our services using our Stripe-based payment
+                                             processor with your credit card,
+                                             please note that the processing of your payment information is handled
+                                             by Stripe and is subject to their
+                                             terms of service and privacy policy. We do not have control over the
+                                             processing of credit card payments.
+                                             <br><br><b>Limitation of Liability:</b><br>
+
+                                             Dezcord is not liable for any damages or losses resulting from the use
+                                             of our service, including but
+                                             not limited to, direct, indirect, incidental, or consequential damages.
+                                             We make no warranties or representations regarding the availability,
+                                             reliability, or accuracy of our
+                                             service.
+                                             <br><br><b>Contact Information:</b><br>
+
+                                             For customer support or inquiries, please contact Lance Pierson, our
+                                             dedicated support representative,
+                                             at admin@Dezcord.com. We are here to assist you with any questions
+                                             or concerns you may have
+                                             regarding our service.
+
+                                             <br><br>By using Dezcord, you acknowledge and agree to the terms
+                                             outlined in this Terms of Service
+                                             agreement. We reserve the right to update or modify these terms at any
+                                             time without prior notice. It is
+                                             your responsibility to review these terms periodically for any changes.
+                                             <br><br><b>
+                                                 Last updated: 7/6/24
+                                             </b><br>
+                                             If you have any questions or concerns about our Terms of Service, please
+                                             contact us at
+                                             admin@Dezcord.com. Thank you for choosing Dezcord for your online
+                                             privacy and security needs.
+                                         </p>
+                                         <h6 style="text-align:center; margin-top:2rem;" class="text-gray-400"><a
+                                                 href="mailto:admin@Dezcord.com"
+                                                 class="text-blue-500">admin@Dezcord.com</a></h6>
+                                     </div>
+                                 </div>
+
+
+
+
+
+</body>
+
+</html>

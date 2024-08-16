@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+
+    <title>embedMail</title>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@LanceTreyark" />
+    <meta name="twitter:title" content="embedMail" />
+    <meta name="twitter:description" content="embedMail" />
+    <meta name="twitter:image" content="https://embedmail.com/resources/embedMailSnap3.png" />
+    <meta name="twitter:creator" content="@LanceTreyark" />
+    <meta property="og:image" content="https://embedmail.com/resources/embedMailSnap3.png" itemprop="thumbnailUrl" />
+    <meta property="og:title" content="embedMail" />
+    <meta property="og:url" content="https://embedmail.com/" />
+    <meta property="og:site_name" content="embedMail" />
+    <meta property="og:description" content="embedMail" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../resources/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../resources/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../resources/favicon-16x16.png">
+    <link rel="manifest" href="../resources/site.webmanifest">
+    <link rel="mask-icon" href="../resources/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+    <!-- Prism CSS CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
+
+    <style>
+        /* For WebKit browsers like Chrome and Safari */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #2e2d2d;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #4e4c4c;
+            border-radius: 1px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+        body {
+            background-image: url("../resources/backgroundRainbowEffect.png");
+            background-repeat: no-repeat;
+        }
+
+        .code-container {
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #1a202c;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .copy-button:hover {
+            background-color: #2d3748;
+        }
+
+        /*Login Modal*/
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-form-container,
+        .register-form-container {
+            background-color: #005eff00;
+            height: auto;
+            border-radius: 0.5rem;
+
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            font-size: 3rem;
+            /* Increase the font size */
+            padding: 0.5rem;
+            /* Add some padding */
+        }
+
+        .code-container {
+            margin-top: 5rem;
+            /*
+            max-width: 800px;
+            min-width: 300px;
+            */
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            border-style: solid;
+            border-width: 1px;
+            border-color: white;
+            /*padding: 2rem;*/
+            border-radius: 0.35rem;
+            background-color: black;
+        }
+
+        .codeParent {
+            margin-bottom: 5rem;
+            max-width: 1220px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        /* Media query for screens with a max width of 1000px */
+        @media (max-width: 1000px) {
+            .code-container {
+                max-width: 600px !important;
+            }
+
+            .codeParent {
+                max-width: 85% !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white" style="padding:1.5rem;" data-bs-theme="dark">
+    <div style="position: absolute; top: 1rem; left: 1rem; z-index: 2;">
+        <a href="https://embedmail.com">
+            <img style="width:40px; display: inline-block;" src="../resources/sP_logo.png">
+            <h1 class="text-xl" style="display: inline-block; margin-left: 0.25rem;">sinePanel</h1>
+        </a>
+    </div>
+
+    <div class="topContainer p-3 text-center bg-gray-700 rounded-md w-72 mx-auto mt-24 mb-12">
+            <h2 class="text-2xl font-bold text-white mb-4">Reset Link Sent</h2>
+            <div>
+              <h3 class="text-xl text-white mb-5">Please check your email for the password reset link</h4>
+              <h6 class="mb-5">Be sure to <em><u>check your spam folder</u></em> </h6>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+</body>
+
+</html>
