@@ -741,9 +741,6 @@
             location.reload();
         }
 
-
-
-
         /////////////////
 
         //Customize User Profile logic --in
@@ -782,9 +779,6 @@
 
         /////////////////
 
-
-
-
         // Server Creation logic -in
         document.getElementById('createServerBtn').addEventListener('click', function () {
             const serverName = document.getElementById('serverName').value;
@@ -819,7 +813,6 @@
         });
         // Server Creation logic -out
 
-
         //Listener to display the attached photo in upload
         document.getElementById('file').addEventListener('change', function (event) {
             const file = event.target.files[0];
@@ -832,9 +825,6 @@
                 reader.readAsDataURL(file);
             }
         });
-
-
-
 
         // Function to create a server image component
         function createServerImage(serverName, attachmentUniqueId) {
@@ -870,7 +860,6 @@
             // Append container to the serverImagesContainer
             serverImagesContainer.appendChild(containerDiv);
         }
-
 
         // Function to fetch and render chat messages
         function fetchChatMessages() {
@@ -926,62 +915,6 @@
                 .catch(error => console.error('Error fetching chat messages:', error));
         }
 
-        /*
-                // Function to fetch and render chat messages needs to render profile pictures
-                function fetchChatMessages() {
-                    fetch('/fetchChatMessages')
-                        .then(response => response.json())
-                        .then(data => {
-                            const chatMessagesContainer = document.getElementById('chatMessagesContainer');
-                            chatMessagesContainer.innerHTML = ''; // Clear existing messages
-        
-                            data.forEach(message => {
-                                const chatComponent = document.createElement('div');
-                                chatComponent.className = 'mx-5 mb-3 flex items-start gap-2.5';
-        
-                                const profileImage = document.createElement('img');
-                                profileImage.id = 'postUserProfilePicture';
-                                profileImage.className = 'w-8 h-8 rounded-full mt-5';
-                                profileImage.src = '../resources/purpleDefaultProfile.png';
-                                profileImage.alt = "User's Profile image";
-        
-                                const chatContent = document.createElement('div');
-                                chatContent.className = 'flex flex-col w-full leading-1.5 p-4';
-        
-                                const header = document.createElement('div');
-                                header.className = 'flex items-center space-x-2 rtl:space-x-reverse';
-        
-                                const userName = document.createElement('span');
-                                userName.id = 'postUserName';
-                                userName.className = 'text-sm font-semibold text-gray-900 dark:text-white';
-                                userName.textContent = message.user_name;
-        
-                                const timestamp = document.createElement('span');
-                                timestamp.id = 'postTimestamp';
-                                timestamp.className = 'text-sm font-normal text-gray-500 dark:text-gray-400';
-                                timestamp.textContent = new Date(message.timestamp).toLocaleString();
-        
-                                const chatText = document.createElement('p');
-                                chatText.id = 'postChatText';
-                                chatText.className = 'text-sm font-normal py-2.5 text-gray-900 dark:text-white';
-                                chatText.textContent = message.chat_text;
-        
-                                header.appendChild(userName);
-                                header.appendChild(timestamp);
-        
-                                chatContent.appendChild(header);
-                                chatContent.appendChild(chatText);
-        
-                                chatComponent.appendChild(profileImage);
-                                chatComponent.appendChild(chatContent);
-        
-                                chatMessagesContainer.appendChild(chatComponent);
-                            });
-                        })
-                        .catch(error => console.error('Error fetching chat messages:', error));
-                }
-        */
-
         // Function to refresh DOM
         function refreshDOM() {
             fetchChatMessages();
@@ -991,7 +924,6 @@
         function refreshPage() {
             location.reload();
         }
-
 
         // Event listener for chat input submission (assuming an Enter key press)
         document.getElementById('chatInput').addEventListener('keydown', function (event) {
@@ -1074,95 +1006,6 @@
                 })
                 .catch(error => console.error('Error fetching default server channels:', error));
 
-            /*
-                        fetch('/fetchDefaultServerChannels')
-                            .then(response => response.json())
-                            .then(data => {
-                                const channelList = document.getElementById('channelList');
-                                const userNameSpan = document.getElementById('displayUserName');
-                                const userProfileImage = document.getElementById('userProfileImage'); // Reference to the profile image element
-            
-                                // Render channels
-                                data.channels.forEach(channel => {
-                                    const listItem = document.createElement('li');
-                                    listItem.className = 'flex items-center space-x-3 hover:text-white focus-ring-4 hover:bg-blue-200';
-            
-                                    const iconContainer = document.createElement('div');
-                                    iconContainer.setAttribute('aria-label', 'Text icon');
-                                    iconContainer.setAttribute('role', 'img');
-                                    iconContainer.className = 'iconContainer_d8bfb3';
-            
-                                    const imgElement = document.createElement('img');
-                                    imgElement.src = '../resources/hashIcon.svg'; // Path to your SVG image
-                                    imgElement.alt = 'Hashtag Icon'; // Alt text for accessibility
-                                    imgElement.className = 'icon_d8bfb3'; // Class for styling if needed
-                                    imgElement.setAttribute('width', '24');
-                                    imgElement.setAttribute('height', '24');
-            
-                                    iconContainer.appendChild(imgElement);
-            
-                                    const spanElement = document.createElement('span');
-                                    spanElement.className = 'ms-3 text-gray-500 dark:text-gray-400';
-                                    spanElement.textContent = channel.channel_name;
-            
-                                    listItem.appendChild(iconContainer);
-                                    listItem.appendChild(spanElement);
-                                    channelList.appendChild(listItem);
-                                });
-            
-                                // Render username
-                                userNameSpan.textContent = data.username;
-            
-                                // Render user profile picture
-                                userProfileImage.src = `/profileImage/${data.profilePicture}`;
-                            })
-                            .catch(error => console.error('Error fetching default server channels:', error));
-            */
-
-
-            /*
-                        //Needs to render profile picture
-                        fetch('/fetchDefaultServerChannels')
-                            .then(response => response.json())
-                            .then(data => {
-                                const channelList = document.getElementById('channelList');
-                                const userNameSpan = document.getElementById('displayUserName');
-            
-                                // Render channels
-                                data.channels.forEach(channel => {
-                                    const listItem = document.createElement('li');
-                                    listItem.className = 'flex items-center space-x-3 hover:text-white focus-ring-4 hover:bg-blue-200';
-            
-                                    const iconContainer = document.createElement('div');
-                                    iconContainer.setAttribute('aria-label', 'Text icon');
-                                    iconContainer.setAttribute('role', 'img');
-                                    iconContainer.className = 'iconContainer_d8bfb3';
-            
-                                    const imgElement = document.createElement('img');
-                                    imgElement.src = '../resources/hashIcon.svg'; // Path to your SVG image
-                                    imgElement.alt = 'Hashtag Icon'; // Alt text for accessibility
-                                    imgElement.className = 'icon_d8bfb3'; // Class for styling if needed
-                                    imgElement.setAttribute('width', '24');
-                                    imgElement.setAttribute('height', '24');
-            
-                                    iconContainer.appendChild(imgElement);
-            
-                                    const spanElement = document.createElement('span');
-                                    spanElement.className = 'ms-3 text-gray-500 dark:text-gray-400';
-                                    spanElement.textContent = channel.channel_name;
-            
-                                    listItem.appendChild(iconContainer);
-                                    listItem.appendChild(spanElement);
-                                    channelList.appendChild(listItem);
-                                });
-            
-                                // Render username
-                                userNameSpan.textContent = data.username;
-                            })
-                            .catch(error => console.error('Error fetching default server channels:', error));
-            
-            */
-
             // Fetch user servers from backend
             fetch('/fetchUserServers')
                 .then(response => {
@@ -1183,9 +1026,6 @@
                 .catch(error => {
                     console.error('Error fetching user servers:', error);
                 });
-
-            // Example usage
-            //fetchUserServers();
 
         });
 

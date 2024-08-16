@@ -19,11 +19,6 @@ const LocalStrategy = require("passport-local").Strategy;
 const dotenv = require("dotenv");
 const envPath = path.resolve(__dirname, "../config/index.env"); // Adjust the path as per your file location
 
-
-// Require the cron job module
-//require('../cron-job');
-
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -155,7 +150,6 @@ passport.use("google", new GoogleStrategy({
     callbackURL: "https://dezcord.com/auth/google/callback" // Update the callback URL
 },
 
-
     async function (accessToken, refreshToken, profile, done) {
         try {
             // Check if the user already exists in the database based on the Google ID
@@ -178,14 +172,6 @@ passport.use("google", new GoogleStrategy({
                 const insertResult = await pool.query(insertQuery);
                 user = insertResult.rows[0];
 
-                // Update the fwd_addr1 field with the email address
-                //const updateQuery = {
-                // text: "UPDATE users SET fwd_addr1 = $1 WHERE id = $2",
-                // values: [email, user.id],
-                //  };
-
-                //await pool.query(updateQuery);
-
             } else {
                 // If the user exists, update their information with the Google data
                 if (!user.token) { // Only generate a new token if one doesn't already exist
@@ -205,15 +191,6 @@ passport.use("google", new GoogleStrategy({
                 const updateResult = await pool.query(updateQuery);
                 user = updateResult.rows[0];
 
-                // If fwd_addr1 is not set, update it with the email address
-                //  if (!user.fwd_addr1) {
-                //      const fwdUpdateQuery = {
-                //          text: "UPDATE users SET fwd_addr1 = $1 WHERE id = $2",
-                //          values: [email, user.id],
-                //      };
-
-                //      await pool.query(fwdUpdateQuery);
-                //  }
             }
 
             return done(null, user);
@@ -300,8 +277,6 @@ function authenticate(req, res, next) {
     }
     res.redirect("/");
 }
-
-
 
 // Middleware for parsing JSON data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -538,7 +513,6 @@ app.post('/stripeData', async (req, res) => {
     }
 });
 
-
 app.get("/", async (req, res) => {
     if (req.isAuthenticated()) {
         try {
@@ -701,10 +675,6 @@ app.post('/updateEmail', async (req, res) => {
 
         const updateResult = await pool.query(updateQuery);
 
-        // Optionally, you can fetch updated user data and send it back in the response
-        // Example:
-        // const updatedUser = updateResult.rows[0];
-
         res.status(200).json({ message: 'Email updated successfully' });
     } catch (error) {
         console.error('Error updating email:', error);
@@ -714,7 +684,7 @@ app.post('/updateEmail', async (req, res) => {
 
 app.post('/toggle-theme', authenticate, async (req, res) => {
     try {
-        const userId = req.user.id; // Assuming req.user contains the authenticated user's info
+        const userId = req.user.id; 
         const { set_theme, dark_mode } = req.body;
 
         const query = `
@@ -732,7 +702,6 @@ app.post('/toggle-theme', authenticate, async (req, res) => {
     }
 });
 
-
 // Serve any file requested ie twittercard.png
 app.get("/resources/:file", (req, res) => {
     const fileName = req.params.file;
@@ -743,7 +712,6 @@ app.get("/resources/:file", (req, res) => {
         }
     });
 });
-
 
 // Set up multer for file uploads
 const storage = multer.diskStorage({
@@ -759,14 +727,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-
-
-////////////////////////////
-////////////////////////////
-
-
-
 
 app.post('/userImageUpload', upload.single('file2'), async (req, res) => {
     console.log(req.body); // Log the entire body to debug
@@ -826,74 +786,6 @@ app.post('/userImageUpload', upload.single('file2'), async (req, res) => {
     }
 });
 
-
-/*
-app.post('/userImageUpload', upload.single('file2'), async (req, res) => {
-    console.log(req.body); // Log the entire body to debug
-    let userName = req.body.userName;
-
-    // Check if userName is an array
-    if (Array.isArray(userName)) {
-        userName = userName[0]; // Get the first value
-    }
-
-    if (typeof userName === 'string') {
-        userName = userName.trim();
-    } else {
-        console.error('userName is not a string:', userName);
-        return res.status(400).send('Invalid user name.');
-    }
-
-    if (!userName) {
-        return res.status(400).send('User name is required.');
-    }
-
-    if (!req.file) {
-        return res.status(400).send('No file uploaded.');
-    }
-
-    const userId = req.user.id;
-
-    try {
-        const client = await pool.connect();
-
-        // Check for duplicate user name
-        const duplicateCheckQuery = 'SELECT 1 FROM chat WHERE user_id = $1 AND user_name = $2';
-        const duplicateCheckValues = [userId, userName];
-        const duplicateCheckResult = await client.query(duplicateCheckQuery, duplicateCheckValues);
-
-        if (duplicateCheckResult.rowCount > 0) {
-            // Duplicate user name found
-            client.release();
-            return res.status(409).send('User name already exists.');
-        }
-
-       
-        const newProfilePicture = req.file.filename;
-
-        const insertQuery = 'INSERT INTO chat (user_name, user_id, profile_picture) VALUES ($1, $2, $3)';
-        const insertValues = [userName, userId, newProfilePicture];
-
-        await client.query(insertQuery, insertValues);
-        client.release();
-
-        res.status(200).send('File uploaded and data saved successfully.');
-    } catch (err) {
-        console.error('Error inserting data:', err);
-        res.status(500).send('Error saving data to the database.');
-    }
-});
-*/
-
-
-///////////////////////////
-//////////////////////////
-
-
-
-
-
-
 app.post('/serverImageUpload', upload.single('file'), async (req, res) => {
     console.log(req.body); // Log the entire body to debug
     let serverName = req.body.serverName;
@@ -950,8 +842,6 @@ app.post('/serverImageUpload', upload.single('file'), async (req, res) => {
     }
 });
 
-
-
 // Middleware to serve images securely
 app.get('/userImage/:filename', (req, res) => {
     const userId = req.user.id; // Ensure you have a way to get the logged-in user's ID
@@ -1001,7 +891,6 @@ app.get('/fetchUserServers', async (req, res) => {
         res.status(500).send('Error fetching user servers.');
     }
 });
-
 
 // Middleware to serve profile pictures
 app.get('/profilePicture/:filename', (req, res) => {
@@ -1076,131 +965,6 @@ app.get('/fetchDefaultServerChannels', async (req, res) => {
     }
 });
 
-/*
-app.get('/fetchDefaultServerChannels', async (req, res) => {
-    try {
-        const client = await pool.connect();
-
-        // Query to fetch channels
-        const channelsQuery = 'SELECT user_name, channel_name FROM chat WHERE user_id = $1';
-        const channelsResult = await client.query(channelsQuery, [0]);
-        const channels = channelsResult.rows;
-
-        // Query to fetch the most recent user_name and profile_picture from the chat table
-        const userProfileQuery = `
-            SELECT user_name, profile_picture
-            FROM chat
-            WHERE user_id = $1
-            ORDER BY serial DESC
-            LIMIT 1`;
-        const userProfileResult = await client.query(userProfileQuery, [req.user.id]);
-        const chatUserName = userProfileResult.rows[0]?.user_name;
-        const profilePicture = userProfileResult.rows[0]?.profile_picture;
-
-        // Determine username
-        let username;
-        if (chatUserName) {
-            username = chatUserName;
-        } else {
-            // Fallback to token-based username if no user_name in chat table
-            const userQuery = 'SELECT token FROM users WHERE id = $1';
-            const userResult = await client.query(userQuery, [req.user.id]);
-            const user = userResult.rows[0];
-            username = `user.${user.token.slice(0, 10)}`;
-        }
-
-        client.release();
-
-        // Respond with the profile picture filename and let the client-side handle the URL
-        res.status(200).json({
-            channels,
-            username,
-            profilePicture: profilePicture || 'purpleDefaultProfile.png'
-        });
-    } catch (err) {
-        console.error('Error fetching default server channels:', err);
-        res.status(500).send('Error fetching default server channels.');
-    }
-});
-*/
-
-
-/*
-//Works for correct username. Next we need the profile picture.
-app.get('/fetchDefaultServerChannels', async (req, res) => {
-    try {
-        const client = await pool.connect();
-
-        // Query to fetch channels
-        const channelsQuery = 'SELECT user_name, channel_name FROM chat WHERE user_id = $1';
-        const channelsResult = await client.query(channelsQuery, [0]);
-        const channels = channelsResult.rows;
-
-        // Query to fetch the most recent user_name from the chat table
-        const userNameQuery = 'SELECT user_name FROM chat WHERE user_id = $1 ORDER BY serial DESC LIMIT 1';
-        const userNameResult = await client.query(userNameQuery, [req.user.id]);
-        const chatUserName = userNameResult.rows[0]?.user_name;
-
-        // Determine username
-        let username;
-        if (chatUserName) {
-            username = chatUserName;
-        } else {
-            // Fallback to token-based username if no user_name in chat table
-            const userQuery = 'SELECT token FROM users WHERE id = $1';
-            const userResult = await client.query(userQuery, [req.user.id]);
-            const user = userResult.rows[0];
-            username = `user.${user.token.slice(0, 10)}`;
-        }
-
-        client.release();
-
-        res.status(200).json({ channels, username });
-    } catch (err) {
-        console.error('Error fetching default server channels:', err);
-        res.status(500).send('Error fetching default server channels.');
-    }
-});
-*/
-
-/////////////////////////////////////////////////
-
-
-//Not capturing the username from chat table
-/*
-app.get('/fetchDefaultServerChannels', async (req, res) => {
-    try {
-        const client = await pool.connect();
-
-        // Query to fetch channels
-        const channelsQuery = 'SELECT user_name, channel_name FROM chat WHERE user_id = $1';
-        const channelsResult = await client.query(channelsQuery, [0]);
-        const channels = channelsResult.rows;
-
-        // Query to fetch user data
-        const userQuery = 'SELECT token FROM users WHERE id = $1';
-        const userResult = await client.query(userQuery, [req.user.id]);
-        const user = userResult.rows[0];
-
-        // Determine username
-        let username;
-        if (user.user_name) {
-            username = user.user_name;
-        } else {
-            username = `user.${user.token.slice(0, 10)}`;
-        }
-
-        client.release();
-
-        res.status(200).json({ channels, username });
-    } catch (err) {
-        console.error('Error fetching default server channels:', err);
-        res.status(500).send('Error fetching default server channels.');
-    }
-});
-*/
-
-
 app.post('/submitChat', async (req, res) => {
     const { userName, chatText } = req.body;
     const userId = req.user.id; // Assuming user is authenticated and req.user is available
@@ -1248,83 +1012,6 @@ app.post('/submitChat', async (req, res) => {
     }
 });
 
-/*
-//Needs to add profile image to db
-app.post('/submitChat', async (req, res) => {
-    const { userName, chatText } = req.body;
-    const userId = req.user.id; // Assuming user is authenticated and req.user is available
-
-    try {
-        const client = await pool.connect();
-
-        // Query to fetch default chat details (if needed)
-        // Modify this query based on your application's logic to fetch necessary chat details
-        const chatDetailsQuery = 'SELECT server_name, server_id, channel_name, channel_id FROM chat WHERE user_id = $1 LIMIT 1';
-        const chatDetailsResult = await client.query(chatDetailsQuery, [0]);
-        const chatDetails = chatDetailsResult.rows[0];
-
-        // Insert new chat message with username
-        const insertChatQuery = `
-            INSERT INTO chat (server_name, server_id, channel_name, channel_id, user_id, user_name, chat_text)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
-        `;
-        await client.query(insertChatQuery, [
-            chatDetails.server_name, // Replace with actual server details if needed
-            chatDetails.server_id,   // Replace with actual server details if needed
-            chatDetails.channel_name, // Replace with actual channel details if needed
-            chatDetails.channel_id,   // Replace with actual channel details if needed
-            userId,
-            userName,
-            chatText
-        ]);
-
-        client.release();
-        res.status(200).json({ success: true });
-    } catch (err) {
-        console.error('Error submitting chat:', err);
-        res.status(500).send('Error submitting chat.');
-    }
-});
-*/
-
-
-/*
-app.post('/submitChat', async (req, res) => {
-    const { chatText } = req.body;
-    const userId = req.user.id; // Assuming user is authenticated and req.user is available
-
-    try {
-        const client = await pool.connect();
-
-        // Query to fetch default chat details
-        const chatDetailsQuery = 'SELECT server_name, server_id, channel_name, channel_id FROM chat WHERE user_id = $1 LIMIT 1';
-        const chatDetailsResult = await client.query(chatDetailsQuery, [0]);
-        const chatDetails = chatDetailsResult.rows[0];
-
-        // Insert new chat message
-        const insertChatQuery = `
-            INSERT INTO chat (server_name, server_id, channel_name, channel_id, user_id, chat_text)
-            VALUES ($1, $2, $3, $4, $5, $6)
-        `;
-        await client.query(insertChatQuery, [
-            chatDetails.server_name,
-            chatDetails.server_id,
-            chatDetails.channel_name,
-            chatDetails.channel_id,
-            userId,
-            chatText
-        ]);
-
-        client.release();
-        res.status(200).json({ success: true });
-    } catch (err) {
-        console.error('Error submitting chat:', err);
-        res.status(500).send('Error submitting chat.');
-    }
-});
-*/
-
-
 app.get('/fetchChatMessages', async (req, res) => {
     try {
         const client = await pool.connect();
@@ -1361,32 +1048,6 @@ app.get('/fetchChatMessages', async (req, res) => {
         res.status(500).send('Error fetching chat messages.');
     }
 });
-
-
-/*
-//Needs to render all profile pictures
-app.get('/fetchChatMessages', async (req, res) => {
-    try {
-        const client = await pool.connect();
-
-        // Query to fetch chat messages
-        const chatMessagesQuery = `
-            SELECT user_name, chat_text, timestamp
-            FROM chat
-            WHERE server_name = 'Treyark'
-            ORDER BY timestamp DESC
-        `;
-        const chatMessagesResult = await client.query(chatMessagesQuery);
-        const chatMessages = chatMessagesResult.rows;
-
-        client.release();
-        res.status(200).json(chatMessages);
-    } catch (err) {
-        console.error('Error fetching chat messages:', err);
-        res.status(500).send('Error fetching chat messages.');
-    }
-});
-*/
 
 app.listen(3010, () => {
     console.log("Server listening on port 3010");
