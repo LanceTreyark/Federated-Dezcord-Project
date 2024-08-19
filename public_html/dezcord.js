@@ -1,4 +1,4 @@
-//index.js for dezcord
+//index.js for Dezcord
 const express = require("express");
 const app = express();
 const axios = require('axios');
@@ -150,6 +150,7 @@ passport.use("google", new GoogleStrategy({
     callbackURL: "https://dezcord.com/auth/google/callback" // Update the callback URL
 },
 
+
     async function (accessToken, refreshToken, profile, done) {
         try {
             // Check if the user already exists in the database based on the Google ID
@@ -190,7 +191,6 @@ passport.use("google", new GoogleStrategy({
                 };
                 const updateResult = await pool.query(updateQuery);
                 user = updateResult.rows[0];
-
             }
 
             return done(null, user);
@@ -277,6 +277,8 @@ function authenticate(req, res, next) {
     }
     res.redirect("/");
 }
+
+
 
 // Middleware for parsing JSON data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -513,6 +515,7 @@ app.post('/stripeData', async (req, res) => {
     }
 });
 
+
 app.get("/", async (req, res) => {
     if (req.isAuthenticated()) {
         try {
@@ -675,6 +678,10 @@ app.post('/updateEmail', async (req, res) => {
 
         const updateResult = await pool.query(updateQuery);
 
+        // Optionally, you can fetch updated user data and send it back in the response
+        // Example:
+        // const updatedUser = updateResult.rows[0];
+
         res.status(200).json({ message: 'Email updated successfully' });
     } catch (error) {
         console.error('Error updating email:', error);
@@ -684,7 +691,7 @@ app.post('/updateEmail', async (req, res) => {
 
 app.post('/toggle-theme', authenticate, async (req, res) => {
     try {
-        const userId = req.user.id; 
+        const userId = req.user.id; // Assuming req.user contains the authenticated user's info
         const { set_theme, dark_mode } = req.body;
 
         const query = `
@@ -702,6 +709,7 @@ app.post('/toggle-theme', authenticate, async (req, res) => {
     }
 });
 
+
 // Serve any file requested ie twittercard.png
 app.get("/resources/:file", (req, res) => {
     const fileName = req.params.file;
@@ -713,7 +721,9 @@ app.get("/resources/:file", (req, res) => {
     });
 });
 
-// Set up multer for file uploads
+const maxFileSize = 10 * 1024 * 1024; // 10 MB limit
+
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const uploadPath = path.join(__dirname, '..', 'userData');
@@ -726,7 +736,10 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: maxFileSize }
+});
 
 app.post('/userImageUpload', upload.single('file2'), async (req, res) => {
     console.log(req.body); // Log the entire body to debug
@@ -842,6 +855,8 @@ app.post('/serverImageUpload', upload.single('file'), async (req, res) => {
     }
 });
 
+
+
 // Middleware to serve images securely
 app.get('/userImage/:filename', (req, res) => {
     const userId = req.user.id; // Ensure you have a way to get the logged-in user's ID
@@ -891,6 +906,7 @@ app.get('/fetchUserServers', async (req, res) => {
         res.status(500).send('Error fetching user servers.');
     }
 });
+
 
 // Middleware to serve profile pictures
 app.get('/profilePicture/:filename', (req, res) => {
@@ -965,63 +981,93 @@ app.get('/fetchDefaultServerChannels', async (req, res) => {
     }
 });
 
-app.post('/submitChat', async (req, res) => {
-    const { userName, chatText } = req.body;
-    const userId = req.user.id; // Assuming user is authenticated and req.user is available
 
-    try {
-        const client = await pool.connect();
+// Designed to support attachments:
+app.post('/submitChat', (req, res) => {
+    upload.single('attachment')(req, res, async function (err) {
+        if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).json({ success: false, message: 'File size exceeds the limit. Please choose a smaller file.' });
+        } else if (err) {
+            return res.status(500).json({ success: false, message: 'Error uploading file.' });
+        }
 
-        // Query to fetch default chat details
-        const chatDetailsQuery = 'SELECT server_name, server_id, channel_name, channel_id FROM chat WHERE user_id = $1 LIMIT 1';
-        const chatDetailsResult = await client.query(chatDetailsQuery, [0]);
-        const chatDetails = chatDetailsResult.rows[0];
+        const { userName, chatText } = req.body;
+        const userId = req.user.id; // Assuming user is authenticated and req.user is available
 
-        // Query to fetch user profile picture
-        const profilePictureQuery = `
+        try {
+            const client = await pool.connect();
+
+            // Query to fetch default chat details
+            const chatDetailsQuery = 'SELECT server_name, server_id, channel_name, channel_id FROM chat WHERE user_id = $1 LIMIT 1';
+            const chatDetailsResult = await client.query(chatDetailsQuery, [0]);
+            const chatDetails = chatDetailsResult.rows[0];
+
+            // Query to fetch user profile picture
+            const profilePictureQuery = `
             SELECT COALESCE(profile_picture, 'purpleDefaultProfile.png') AS profile_picture
             FROM chat
             WHERE user_id = $1
             ORDER BY serial DESC
             LIMIT 1
         `;
-        const profilePictureResult = await client.query(profilePictureQuery, [userId]);
-        const profilePicture = profilePictureResult.rows[0].profile_picture;
+            const profilePictureResult = await client.query(profilePictureQuery, [userId]);
+            const profilePicture = profilePictureResult.rows[0].profile_picture;
 
-        // Insert new chat message with username and profile picture
-        const insertChatQuery = `
-            INSERT INTO chat (server_name, server_id, channel_name, channel_id, user_id, user_name, chat_text, profile_picture)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            let ogAttachmentName = null;
+            let attachmentUniqueId = null;
+            let attachmentType = null;
+            let attachmentSize = null;
+
+            if (req.file) {
+                ogAttachmentName = req.file.originalname;
+                attachmentUniqueId = req.file.filename;
+                attachmentType = req.file.mimetype;
+                attachmentSize = req.file.size;
+            }
+
+            // Insert new chat message with username, profile picture, and attachment details
+            const insertChatQuery = `
+            INSERT INTO chat (server_name, server_id, channel_name, channel_id, user_id, user_name, chat_text, profile_picture, og_attachment_name, attachment_unique_id, attachment_type, attachment_size)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
         `;
-        await client.query(insertChatQuery, [
-            chatDetails.server_name,
-            chatDetails.server_id,
-            chatDetails.channel_name,
-            chatDetails.channel_id,
-            userId,
-            userName,
-            chatText,
-            profilePicture
-        ]);
+            await client.query(insertChatQuery, [
+                chatDetails.server_name,
+                chatDetails.server_id,
+                chatDetails.channel_name,
+                chatDetails.channel_id,
+                userId,
+                userName,
+                chatText,
+                profilePicture,
+                ogAttachmentName,
+                attachmentUniqueId,
+                attachmentType,
+                attachmentSize
+            ]);
 
-        client.release();
-        res.status(200).json({ success: true });
-    } catch (err) {
-        console.error('Error submitting chat:', err);
-        res.status(500).send('Error submitting chat.');
-    }
+            client.release();
+            res.status(200).json({ success: true });
+        } catch (err) {
+            console.error('Error submitting chat:', err);
+            res.status(500).send('Error submitting chat.');
+        }
+    });
 });
 
 app.get('/fetchChatMessages', async (req, res) => {
     try {
         const client = await pool.connect();
 
-        // Query to fetch chat messages along with the user's most recent profile picture
+        // Query to fetch chat messages with attachment details
         const chatMessagesQuery = `
             SELECT 
                 c.user_name, 
                 c.chat_text, 
                 c.timestamp, 
+                c.attachment_unique_id,
+                c.og_attachment_name,
+                c.attachment_type,
+                c.attachment_size,
                 COALESCE(
                     '/profilePicture/' || COALESCE(u.profile_picture, 'purpleDefaultProfile.png'),
                     '/profilePicture/purpleDefaultProfile.png'

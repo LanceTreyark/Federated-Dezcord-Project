@@ -564,13 +564,22 @@
         </div>
 
         <!---->
-        <!-- Chat input -->
 
+        <!-- Chat input -->
         <div style="width:100%;"
-            class="chatInput px-5 py-4 bg-white border-r dark:bg-zinc-953 dark:border-zinc-954 border-t border-zinc-400 ">
-            <div style=" margin:auto;">
-                <input id="chatInput" style="width:100%;" type="text" placeholder=""
-                    class=" border rounded-sm bg-white border-r border-gray-500 dark:bg-zinc-700 dark:border-zinc-955 dark:text-white">
+            class="chatInput px-5 py-4 bg-white border-r dark:bg-zinc-953 dark:border-zinc-954 border-t border-zinc-400">
+            <div style="margin:auto; display: flex; align-items: center;">
+                <!-- Paperclip/attachment button -->
+                <input type="file" id="chatAttachmentInput" style="display:none;" />
+                <button id="chatAttachmentButton" style="margin-right: 0.5rem;"
+                    class="flex items-center justify-center h-8 w-8 rounded-full text-token-text-primary dark:text-white focus-visible:outline-black dark:focus-visible:outline-white"
+                    aria-disabled="false">
+                    <img src="../resources/paperClip.svg">
+                </button>
+
+                <!-- Expanding Textarea -->
+                <textarea id="chatInput" style="width:100%; resize: none; overflow: hidden;" rows="1" placeholder=""
+                    class="border rounded-sm bg-white border-gray-500 dark:bg-zinc-700 dark:border-zinc-955 dark:text-white"></textarea>
             </div>
         </div>
 
@@ -578,8 +587,6 @@
     </div>
 
     <!--Chat messages out /\ -->
-
-
 
     <script>
         var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
@@ -621,6 +628,19 @@
                 }
             }
 
+        });
+
+        //Chat text box:
+        //Script to make the textarea expand as you type
+        document.getElementById('chatInput').addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+
+        // Trigger file input when the attachment button is clicked
+        document.getElementById('chatAttachmentButton').addEventListener('click', function () {
+            document.getElementById('chatAttachmentInput').click();
         });
 
 
@@ -706,9 +726,6 @@
             }
         });
 
-
-
-
         //Listener to display the attached photo in upload
         document.getElementById('file').addEventListener('change', function (event) {
             const file = event.target.files[0];
@@ -722,26 +739,19 @@
             }
         });
 
-
-
         function hideCustomizeServerForm() {
             document.getElementById('customizeServerContainer').style.display = 'none';
         }
 
         // Show system notification
         function showSystemNotification(message) {
-            // Implement your system notification display logic here
-            alert(message); // Replace with your custom notification logic
+            alert(message);
         }
-
-
 
         // Function to refresh the page
         function refreshPage() {
             location.reload();
         }
-
-        /////////////////
 
         //Customize User Profile logic --in
         document.getElementById('editUserBtn').addEventListener('click', function () {
@@ -777,7 +787,6 @@
         });
         //Customize User Profile logic --out
 
-        /////////////////
 
         // Server Creation logic -in
         document.getElementById('createServerBtn').addEventListener('click', function () {
@@ -861,6 +870,7 @@
             serverImagesContainer.appendChild(containerDiv);
         }
 
+
         // Function to fetch and render chat messages
         function fetchChatMessages() {
             fetch('/fetchChatMessages')
@@ -906,6 +916,45 @@
                         chatContent.appendChild(header);
                         chatContent.appendChild(chatText);
 
+                        // Render attachment if exists
+                        if (message.attachment_unique_id) {
+                            const attachmentContainer = document.createElement('div');
+                            attachmentContainer.className = 'mt-2';
+
+                            if (message.attachment_type.startsWith('image/')) {
+                                const imagePreview = document.createElement('img');
+                                imagePreview.src = `/userImage/${message.attachment_unique_id}`;
+                                imagePreview.style.maxWidth = '40%';
+                                imagePreview.className = 'cursor-pointer';
+
+                                imagePreview.onclick = () => openModal(`/userImage/${message.attachment_unique_id}`);
+
+                                attachmentContainer.appendChild(imagePreview);
+                            } else {
+                                const fileIcon = document.createElement('img');
+                                fileIcon.src = '/resources/file.svg';
+                                fileIcon.className = 'cursor-pointer';
+                                fileIcon.alt = 'File Attachment';
+                                fileIcon.style.width = '2rem'; 
+                                
+                                const fileName = document.createElement('div');
+                                fileName.className = 'text-sm mt-1 text-gray-900 dark:text-white';
+                                fileName.textContent = message.og_attachment_name;
+
+                                fileIcon.onclick = () => {
+                                    const link = document.createElement('a');
+                                    link.href = `/userImage/${message.attachment_unique_id}`;
+                                    link.download = message.og_attachment_name;
+                                    link.click();
+                                };
+
+                                attachmentContainer.appendChild(fileIcon);
+                                attachmentContainer.appendChild(fileName);
+                            }
+
+                            chatContent.appendChild(attachmentContainer);
+                        }
+
                         chatComponent.appendChild(profileImage);
                         chatComponent.appendChild(chatContent);
 
@@ -913,6 +962,24 @@
                     });
                 })
                 .catch(error => console.error('Error fetching chat messages:', error));
+        }
+
+        // Function to open a modal for image preview
+        function openModal(imageSrc) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50';
+
+            const modalImage = document.createElement('img');
+            modalImage.src = imageSrc;
+            modalImage.style.maxWidth = '99%';
+
+            modal.appendChild(modalImage);
+
+            modal.onclick = () => {
+                modal.remove();
+            };
+
+            document.body.appendChild(modal);
         }
 
         // Function to refresh DOM
@@ -925,6 +992,7 @@
             location.reload();
         }
 
+
         // Event listener for chat input submission (assuming an Enter key press)
         document.getElementById('chatInput').addEventListener('keydown', function (event) {
             if (event.key === 'Enter') {
@@ -935,24 +1003,31 @@
         // Initial fetch of chat messages when page loads
         fetchChatMessages();
 
+
         // Function to submit chat message
         function submitChatMessage() {
             const chatInput = document.getElementById('chatInput');
             const chatText = chatInput.value;
+            const chatAttachment = document.getElementById('chatAttachmentInput').files[0];
             const userNameElement = document.getElementById('displayUserName');
-            const userName = userNameElement ? userNameElement.textContent : 'Unknown User'; // Fetch username from element or default to 'Unknown User'
+            const userName = userNameElement ? userNameElement.textContent : 'Unknown User'; // Fetch username or default to 'Unknown User'
+
+            const formData = new FormData();
+            formData.append('chatText', chatText);
+            formData.append('userName', userName);
+            if (chatAttachment) {
+                formData.append('attachment', chatAttachment);
+            }
 
             fetch('/submitChat', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ userName, chatText })
+                body: formData
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
                         chatInput.value = ''; // Clear the input field
+                        document.getElementById('chatAttachmentInput').value = ''; // Clear the file input
                         fetchChatMessages(); // Fetch updated chat messages
                         refreshDOM();
                         //refreshPage();
