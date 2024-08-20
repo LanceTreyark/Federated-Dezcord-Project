@@ -923,11 +923,11 @@
 
                             if (message.attachment_type.startsWith('image/')) {
                                 const imagePreview = document.createElement('img');
-                                imagePreview.src = `/userImage/${message.attachment_unique_id}`;
+                                imagePreview.src = `/chatFiles/${message.attachment_unique_id}`;
                                 imagePreview.style.maxWidth = '40%';
                                 imagePreview.className = 'cursor-pointer';
 
-                                imagePreview.onclick = () => openModal(`/userImage/${message.attachment_unique_id}`);
+                                imagePreview.onclick = () => openModal(`/chatFiles/${message.attachment_unique_id}`);
 
                                 attachmentContainer.appendChild(imagePreview);
                             } else {
@@ -943,7 +943,7 @@
 
                                 fileIcon.onclick = () => {
                                     const link = document.createElement('a');
-                                    link.href = `/userImage/${message.attachment_unique_id}`;
+                                    link.href = `/chatFiles/${message.attachment_unique_id}`;
                                     link.download = message.og_attachment_name;
                                     link.click();
                                 };

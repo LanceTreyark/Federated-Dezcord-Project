@@ -89,6 +89,9 @@ SSLCertificateKeyFile /etc/letsencrypt/live/example.com/privkey.pem
       ProxyPass "/profileImage/" "http://localhost:3010/profileImage/"
       ProxyPassReverse "/profileImage/" "http://localhost:3010/profileImage/"
 
+      ProxyPass "/chatFiles/" "http://localhost:3010/chatFiles/"
+      ProxyPassReverse "/chatFiles/" "http://localhost:3010/chatFiles/"
+
       #ProxyPass "/" "http://localhost:3010/"
       #ProxyPassReverse "/" "http://localhost:3010/"
 

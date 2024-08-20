@@ -855,6 +855,23 @@ app.post('/serverImageUpload', upload.single('file'), async (req, res) => {
     }
 });
 
+// Middleware to serve files for everyone in the chat
+app.get('/chatFiles/:filename', (req, res) => {
+    const filename = req.params.filename;
+
+    const filePath = path.join(__dirname, '..', 'userData', filename);
+
+    // Check if the file exists
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.error('File not found:', err);
+            return res.status(404).send('File not found.');
+        }
+
+        // Serve the file
+        res.sendFile(filePath);
+    });
+});
 
 
 // Middleware to serve images securely
