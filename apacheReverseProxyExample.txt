@@ -92,6 +92,12 @@ SSLCertificateKeyFile /etc/letsencrypt/live/example.com/privkey.pem
       ProxyPass "/chatFiles/" "http://localhost:3010/chatFiles/"
       ProxyPassReverse "/chatFiles/" "http://localhost:3010/chatFiles/"
 
+      ProxyPass "/fetchUserData" "http://localhost:3010/fetchUserData"
+      ProxyPassReverse "/fetchUserData" "http://localhost:3010/fetchUserData"
+
+      ProxyPass "/deletePost" "http://localhost:3010/deletePost"
+      ProxyPassReverse "/deletePost" "http://localhost:3010/deletePost"
+
       #ProxyPass "/" "http://localhost:3010/"
       #ProxyPassReverse "/" "http://localhost:3010/"
 
