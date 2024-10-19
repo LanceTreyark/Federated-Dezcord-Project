@@ -153,39 +153,61 @@
             cursor: pointer;
             font-size: 2.1rem;
         }
+
+
+        /*9.27.24*/
+        /*scrolling Server list*/
+        #serverImagesContainer {
+            /* Maximum height for vertical scrolling */
+            max-height: 70dvh;
+
+            /* Enable vertical scroll */
+            overflow-x: hidden;
+
+            /* Hide scrollbar in Firefox */
+            scrollbar-width: none;
+
+        }
+
+        #serverImagesContainer::-webkit-scrollbar {
+            /* Hide scrollbar in Chrome, Safari, and Edge */
+            display: none;
+        }
     </style>
 </head>
 
 <body class="bg-white dark:bg-zinc-953">
 
-
     <aside id="logo-sidebar" style="padding-left:4rem;"
         class="fixed top-0 left-0 z-40 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-zinc-954 dark:border-zinc-955"
         aria-label="Sidebar">
-
 
         <!--Current Server Title -->
         <div class="border-b-2 dark:border-zinc-955" style=" height:3rem;">
             <ul class="space-y-2 font-medium ">
                 <li class="flex items-center space-x-3">
-                    <span id="currentServerTitle" class="mt-3 mx-5 text-gray-500 dark:text-white">Dezcord</span>
+                    <span id="currentServerTitle" class="mt-3 mx-5 text-gray-500 dark:text-white">Active Server:
+                        Loading...</span>
                 </li>
             </ul>
         </div>
 
-        <!--Side Bar-->
-        <!--<div class="mt-3 h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-zinc-954 flex flex-col justify-between">-->
-
+        <!-- Side Bar -->
         <div class="mt-3 h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-zinc-954">
-
             <details open>
                 <summary class="cursor-pointer text-gray-900 dark:text-gray-400">TEXT CHANNELS</summary>
                 <ul id="channelList" class="space-y-2 font-medium mt-2">
-                    <!--Channel list items to be dynamically inserted here:-->
+                    <!-- Channel list items to be dynamically inserted here: -->
+                </ul>
+                <div class="mt-4 flex space-x-5"> <!-- Flex container for icons -->
+                    <div class="cursor-pointer" id="addChatUserBtn">
+                        <img style="height: 15px;" src="../resources/users.svg" alt="Add User">
+                    </div>
+                    <div class="cursor-pointer" id="deleteServerBtn">
+                        <img style="height: 15px;" src="../resources/trashCan.svg" alt="Delete Server">
+                    </div>
+                </div>
             </details>
-
-
-
         </div>
 
 
@@ -195,7 +217,7 @@
             aria-label="Sidebar2">
 
             <!--dezcord button-->
-            <div style="height:3rem; width:3rem; border-radius:50%; margin:auto;"
+            <div id="defaultServerButton" style="height:3rem; width:3rem; border-radius:50%; margin:auto;"
                 class="flex items-center bg-gray-300 dark:bg-zinc-953 cursor-pointer focus:ring-blue-500 focus-ring-4 hover:bg-gray-600 hover:text-blue-700">
                 <img src="../resources/treyarkLogo2.png" class="" style="margin:auto; height:28px; padding-bottom: 3px"
                     alt="Dezcord Logo" />
@@ -231,15 +253,8 @@
                     </svg>
                 </div>
             </div>
-
-
-
         </nav>
-
     </aside>
-
-
-
 
     <!--createServerModal-in-->
     <div class="flex createServerContainer" id="createServerContainer" style="display:none;">
@@ -347,7 +362,6 @@
                         </h1>
                     </div>
                     <!--Button 7 out-->
-
                     <!--Scrolling container STOP-->
                 </div>
 
@@ -364,10 +378,7 @@
     </div>
     <!--createServerModal-out-->
 
-
-
     <!--customizeServerModal-in-->
-
     <div class="flex createServerContainer" id="customizeServerContainer" style="display:none;">
         <div class=" createServerDiv relative" id="createServerForm">
             <div style="width:80dvw; max-width:430px;"
@@ -385,9 +396,7 @@
                     <div class="scroll-container overflow-y-auto px-2 border-gray-300 dark:border-zinc-955"
                         style="border-style:solid;  border-width:1px;">
 
-
                         <!--Upload Camera SVG-->
-
                         <div class="my-3">
                             <input type="file" name="file" id="file" style="display:none;" />
                             <label for="file">
@@ -395,7 +404,6 @@
                                     style="display: inline-block;">
                             </label>
                         </div>
-
                         <!--Scrolling container STOP-->
                     </div>
 
@@ -405,7 +413,6 @@
                             <label for="small-input" style="text-align:left; "
                                 class="block mb-2 text-xs font-medium text-gray-900 dark:text-gray-400">SERVER
                                 NAME</label>
-
                             <input style="width:100%;" type="text" name="serverName" id="serverName"
                                 placeholder="Enter server name"
                                 class=" border rounded-sm bg-white border-r border-gray-500 dark:bg-zinc-700 dark:border-zinc-955 dark:text-white"
@@ -414,24 +421,15 @@
                         <button type="button" id="createServerBtn" style="width:100%;"
                             class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create
                             Server</button>
-
                     </div>
-
                 </form>
-
             </div>
-
         </div>
     </div>
-
     <!--customizeServerModal-out-->
 
-
-
     <!--UserProfileModal-->
-
     <!--updateUserProfileModal-in-->
-
     <div class="flex editUserContainer" id="editUserContainer" style="display:none;">
         <div class=" editUserDiv relative" id="editUserDiv">
             <div style="width:80dvw; max-width:430px;"
@@ -452,7 +450,6 @@
 
 
                         <!--Upload Camera SVG-->
-
                         <div class="my-3">
                             <input type="file" name="file2" id="file2" style="display:none;" />
                             <label for="file2">
@@ -460,7 +457,6 @@
                                     style="display: inline-block;">
                             </label>
                         </div>
-
                         <!--Scrolling container STOP-->
                     </div>
 
@@ -479,19 +475,118 @@
                         <button type="button" id="editUserBtn" style="width:100%;"
                             class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit
                             Changes</button>
-
                     </div>
-
                 </form>
-
             </div>
-
         </div>
     </div>
-
     <!--updateUserProfileModal-out-->
-
     <!--UserProfileModal out-->
+
+
+    <!--addChatUserModal-in-->
+    <div class="flex createServerContainer" id="addChatUserModal" style="display:none;">
+        <div class=" createServerDiv relative" id="addChatUserForm">
+            <div style="width:80dvw; max-width:430px;"
+                class="topContainer2  text-center bg-gray-100 dark:bg-zinc-952 rounded-md mx-auto ">
+                <form id="addUserForm" enctype="multipart/form-data">
+                    <h2 style="text-align:right; padding-right: 1rem;"><span class="close-button dark:text-gray-400"
+                            onclick="hideAddChatUserModal()">&times;</span></h2>
+                    <div class="px-2">
+                        <h2 class=" text-2xl font-bold dark:text-gray-300">Add Users</h2>
+                        <p class="dark:text-gray-400 mb-3">Invite friends or add users to a private server</p>
+                    </div>
+
+                    <!--Scrolling container Here:-->
+                    <div class="scroll-container overflow-y-auto px-2 border-gray-300 dark:border-zinc-955"
+                        style="border-style:solid;  border-width:1px;">
+
+
+                        <!--Scrolling container STOP-->
+                    </div>
+
+                    <div style="width:100%;"
+                        class="chatInput px-5 py-4 bg-white border-r dark:bg-zinc-952 dark:border-zinc-954 border-t border-zinc-400 ">
+                        <div style=" margin:auto;">
+                            <label for="small-input" style="text-align:left; "
+                                class="block mb-2 text-xs font-medium text-gray-900 dark:text-gray-400">USER
+                                NAME</label>
+                            <input style="width:100%;" type="text" name="userNameInput" id="userNameInput"
+                                placeholder="Enter user name"
+                                class=" border rounded-sm bg-white border-r border-gray-500 dark:bg-zinc-700 dark:border-zinc-955 dark:text-white"
+                                required />
+                        </div>
+
+
+                        <div style=" margin:1rem auto 1rem auto;">
+                            <label for="small-input" style="text-align:left; "
+                                class="block mb-2 text-xs font-medium text-gray-900 dark:text-gray-400">SERVER
+                                NAME</label>
+                            <input style="width:100%;" type="text" name="serverName2" id="serverName2"
+                                placeholder="Enter server name"
+                                class=" border rounded-sm bg-white border-r border-gray-500 dark:bg-zinc-700 dark:border-zinc-955 dark:text-white"
+                                required />
+                        </div>
+
+                        <button type="button" id="addChatUserSubmitBtn" style="width:100%;"
+                            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add
+                            User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--addChatUserModal-out-->
+
+
+    <!--deleteServerModal-in-->
+    <div class="flex createServerContainer" id="deleteServerModal" style="display:none;">
+        <div class=" createServerDiv relative" id="addChatUserForm">
+            <div style="width:80dvw; max-width:430px;"
+                class="topContainer2  text-center bg-gray-100 dark:bg-zinc-952 rounded-md mx-auto ">
+                <form id="deleteServerForm" enctype="multipart/form-data">
+                    <h2 style="text-align:right; padding-right: 1rem;"><span class="close-button dark:text-gray-400"
+                            onclick="hideDeleteServerModal()">&times;</span></h2>
+                    <div class="px-2">
+                        <h2 class=" text-2xl font-bold text-red-700">DELETE A SERVER</h2>
+                        <p class="text-red-700 mb-3"><b>DANGER ZONE! This cannot be undone<br>
+                                <span style="color:orange;">Make sure you are CURRENTLY IN THE SERVER you want to
+                                    delete</span></b></p>
+                    </div>
+
+                    <!--Scrolling container Here:-->
+                    <div class="scroll-container overflow-y-auto px-2 border-gray-300 dark:border-zinc-955"
+                        style="border-style:solid;  border-width:1px;">
+
+
+                        <!--Scrolling container STOP-->
+                    </div>
+
+                    <div style="width:100%;"
+                        class="chatInput px-5 py-4 bg-white border-r dark:bg-zinc-952 dark:border-zinc-954 border-t border-zinc-400 ">
+
+
+
+                        <div style=" margin:1rem auto 1rem auto;">
+                            <label for="small-input" style="text-align:left; "
+                                class="block mb-2 text-xs font-medium text-gray-900 dark:text-gray-400">SERVER
+                                NAME</label>
+                            <input style="width:100%;" type="text" name="serverName3" id="serverName3"
+                                placeholder="Enter server name"
+                                class=" border rounded-sm bg-white border-r border-gray-500 dark:bg-zinc-700 dark:border-zinc-955 dark:text-white"
+                                required />
+                        </div>
+
+                        <button type="button" id="deleteServerSubmitBtn" style="width:100%;"
+                            class="mt-5 text-white bg-red-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-800 dark:focus:ring-red-800">DELETE
+                            SERVER</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--deleteServerModal-out-->
+
 
 
     <div class="chatHeader border-b-2 bg-white border-r border-gray-200  dark:bg-zinc-953 dark:border-zinc-954"
@@ -539,31 +634,21 @@
                         <img class="w-6 h-6 rounded-full" id="userProfileImage"
                             src="../resources/purpleDefaultProfile.png" alt="User's Profile image">
                     </div>
-
                 </div>
             </div>
             <!--User profile component -out -->
-
-
         </div>
     </div>
 
     <!--mainDiv-->
     <div class="pt-1 sm:ml-64">
-
         <div class="sm:ml-64 flex flex-col min-h-screen " style="margin:auto; ">
             <!-- Chat Container -->
             <div class="flex-grow flex-grow-x p-4 mt-10 " style="width:100%; margin:auto; ">
-
-                <!-- Chat message components go here: -->
-
                 <!-- Container to Display Chat Messages -->
                 <div id="chatMessagesContainer"></div>
-
             </div>
         </div>
-
-        <!---->
 
         <!-- Chat input -->
         <div style="width:100%;"
@@ -582,10 +667,8 @@
                     class="border rounded-sm bg-white border-gray-500 dark:bg-zinc-700 dark:border-zinc-955 dark:text-white"></textarea>
             </div>
         </div>
-
         <!--chat area out-->
     </div>
-
     <!--Chat messages out /\ -->
 
     <script>
@@ -637,12 +720,10 @@
             this.style.height = (this.scrollHeight) + 'px';
         });
 
-
         // Trigger file input when the attachment button is clicked
         document.getElementById('chatAttachmentButton').addEventListener('click', function () {
             document.getElementById('chatAttachmentInput').click();
         });
-
 
         //EDIT USER IN-
         // Function to show the modal
@@ -680,7 +761,6 @@
         });
         //EDIT USER OUT-
 
-
         // Function to show the modal
         function showServerForm() {
             document.getElementById('createServerContainer').style.display = 'flex';
@@ -702,7 +782,6 @@
             }
         });
 
-
         // Function to show the customize server modal and hide the create server modal
         function showCustomizeServerForm() {
             document.getElementById('customizeServerContainer').style.display = 'flex';
@@ -716,7 +795,6 @@
 
         // Event listener for the button to open the customize server modal
         document.getElementById('createMyOwnServer').addEventListener('click', showCustomizeServerForm);
-
 
         // Event listener for clicking outside the topContainer to close the customize server modal
         document.getElementById('customizeServerContainer').addEventListener('click', function (event) {
@@ -787,7 +865,6 @@
         });
         //Customize User Profile logic --out
 
-
         // Server Creation logic -in
         document.getElementById('createServerBtn').addEventListener('click', function () {
             const serverName = document.getElementById('serverName').value;
@@ -795,7 +872,6 @@
                 const form = document.getElementById('uploadForm');
                 const formData = new FormData(form);
                 formData.append('serverName', serverName);
-
                 fetch('/serverImageUpload', {
                     method: 'POST',
                     body: formData
@@ -835,133 +911,260 @@
             }
         });
 
-        // Function to create a server image component
-        function createServerImage(serverName, attachmentUniqueId) {
-            const serverImagesContainer = document.getElementById('serverImagesContainer');
-
-            // Create container for the image
-            const containerDiv = document.createElement('div');
-            containerDiv.style.height = '3rem'; // Container height
-            containerDiv.style.width = '3rem'; // Container width
-            containerDiv.style.borderRadius = '50%'; // Make container circular
-            containerDiv.style.margin = '0.5rem auto'; // Top and bottom margins, left and right margins are auto
-            containerDiv.style.overflow = 'hidden'; // Hide any overflow
-            containerDiv.className = 'flex items-center bg-gray-300 dark:bg-zinc-953 cursor-pointer focus:ring-blue-500 focus-ring-4 hover:bg-gray-600 hover:text-blue-700'; // Apply styling class
-
-            // Create image element
-            const imgElement = document.createElement('img');
-            imgElement.src = `/userImage/${attachmentUniqueId}`; // Secure endpoint for image
-            imgElement.alt = serverName;
-            imgElement.title = serverName;
-            imgElement.style.height = '80%'; // Image height
-            imgElement.style.width = '80%'; // Image width
-            imgElement.style.margin = "auto";
-            imgElement.style.objectFit = 'cover'; // Cover the container without distortion
-
-            const hoverText = document.createElement('span');
-            hoverText.className = 'sr-only';
-            hoverText.textContent = serverName;
-            containerDiv.appendChild(hoverText);
-
-            // Append image to the container
-            containerDiv.appendChild(imgElement);
-
-            // Append container to the serverImagesContainer
-            serverImagesContainer.appendChild(containerDiv);
+        // Function to fetch the current user's username
+        function fetchUserData() {
+            return fetch('/fetchUserData')
+                .then(response => response.json())
+                .then(data => data.username)
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                    return null;
+                });
         }
 
 
-        // Function to fetch and render chat messages
+
+
+
+
+        // works fine but we need to render the current server name
         function fetchChatMessages() {
             fetch('/fetchChatMessages')
                 .then(response => response.json())
                 .then(data => {
-                    const chatMessagesContainer = document.getElementById('chatMessagesContainer');
-                    chatMessagesContainer.innerHTML = ''; // Clear existing messages
+                    return fetchUserData().then(username => {
+                        const chatMessagesContainer = document.getElementById('chatMessagesContainer');
+                        chatMessagesContainer.innerHTML = ''; // Clear existing messages
 
-                    data.forEach(message => {
-                        const chatComponent = document.createElement('div');
-                        chatComponent.className = 'mx-5 mb-3 flex items-start gap-2.5';
+                        data.forEach((message, index) => {
+                            const chatComponent = document.createElement('div');
+                            chatComponent.className = 'mx-5 mb-3 flex items-start gap-2.5';
+                            chatComponent.classList.add(`post-${message.serial}`); // Add unique class for each post
 
-                        const profileImage = document.createElement('img');
-                        profileImage.id = 'postUserProfilePicture';
-                        profileImage.className = 'w-8 h-8 rounded-full mt-5';
-                        profileImage.src = message.profile_picture; // Use the fetched profile picture URL
-                        profileImage.alt = "User's Profile image";
+                            const profileImage = document.createElement('img');
+                            profileImage.id = 'postUserProfilePicture';
+                            profileImage.className = 'w-8 h-8 rounded-full mt-5';
+                            profileImage.src = message.profile_picture;
+                            profileImage.alt = "User's Profile image";
 
-                        const chatContent = document.createElement('div');
-                        chatContent.className = 'flex flex-col w-full leading-1.5 p-4';
+                            const chatContent = document.createElement('div');
+                            chatContent.className = 'flex flex-col w-full leading-1.5 p-4';
 
-                        const header = document.createElement('div');
-                        header.className = 'flex items-center space-x-2 rtl:space-x-reverse';
+                            const header = document.createElement('div');
+                            header.className = 'flex items-center space-x-2 rtl:space-x-reverse';
 
-                        const userName = document.createElement('span');
-                        userName.id = 'postUserName';
-                        userName.className = 'text-sm font-semibold text-gray-900 dark:text-white';
-                        userName.textContent = message.user_name;
+                            const userName = document.createElement('span');
+                            userName.id = 'postUserName';
+                            userName.className = 'text-sm font-semibold text-gray-900 dark:text-white';
+                            userName.textContent = message.user_name;
 
-                        const timestamp = document.createElement('span');
-                        timestamp.id = 'postTimestamp';
-                        timestamp.className = 'text-sm font-normal text-gray-500 dark:text-gray-400';
-                        timestamp.textContent = new Date(message.timestamp).toLocaleString();
+                            const timestamp = document.createElement('span');
+                            timestamp.id = 'postTimestamp';
+                            timestamp.className = 'text-sm font-normal text-gray-500 dark:text-gray-400';
+                            timestamp.textContent = new Date(message.timestamp).toLocaleString();
 
-                        const chatText = document.createElement('p');
-                        chatText.id = 'postChatText';
-                        chatText.className = 'text-sm font-normal py-2.5 text-gray-900 dark:text-white';
-                        chatText.textContent = message.chat_text;
+                            // Create a unique ID for each dropdown menu
+                            const uniqueId = `dropdownDots${index}`;
 
-                        header.appendChild(userName);
-                        header.appendChild(timestamp);
+                            // Create the menu button
+                            const menuButton = document.createElement('button');
+                            menuButton.id = `dropdownMenuIconButton${index}`;
+                            menuButton.className = 'inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-zinc-953 dark:hover:bg-zinc-952 dark:focus:ring-gray-600';
+                            menuButton.type = 'button';
 
-                        chatContent.appendChild(header);
-                        chatContent.appendChild(chatText);
+                            // Use external SVG for the menu icon
+                            const menuIcon = document.createElement('img');
+                            menuIcon.src = '/resources/dotMenu.svg';
+                            menuIcon.className = 'w-5 h-5';
+                            menuIcon.alt = 'Menu Dots';
 
-                        // Render attachment if exists
-                        if (message.attachment_unique_id) {
-                            const attachmentContainer = document.createElement('div');
-                            attachmentContainer.className = 'mt-2';
+                            menuButton.appendChild(menuIcon);
 
-                            if (message.attachment_type.startsWith('image/')) {
-                                const imagePreview = document.createElement('img');
-                                imagePreview.src = `/chatFiles/${message.attachment_unique_id}`;
-                                imagePreview.style.maxWidth = '40%';
-                                imagePreview.className = 'cursor-pointer';
+                            // Create the dropdown menu
+                            const dropdownMenu = document.createElement('div');
+                            dropdownMenu.id = uniqueId;
+                            dropdownMenu.className = 'dropdown-menu z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600';
 
-                                imagePreview.onclick = () => openModal(`/chatFiles/${message.attachment_unique_id}`);
+                            const dropdownList = document.createElement('ul');
+                            dropdownList.className = 'py-2 text-sm text-gray-700 dark:text-gray-200';
 
-                                attachmentContainer.appendChild(imagePreview);
+                            if (message.user_name !== username) {
+                                const replyOption = document.createElement('li');
+                                const replyLink = document.createElement('a');
+                                replyLink.href = '#';
+                                replyLink.className = 'block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white';
+                                replyLink.textContent = 'Reply';
+                                replyOption.appendChild(replyLink);
+
+                                const forwardOption = document.createElement('li');
+                                const forwardLink = document.createElement('a');
+                                forwardLink.href = '#';
+                                forwardLink.className = 'block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white';
+                                forwardLink.textContent = 'Forward';
+                                forwardOption.appendChild(forwardLink);
+
+                                dropdownList.appendChild(replyOption);
+                                dropdownList.appendChild(forwardOption);
                             } else {
-                                const fileIcon = document.createElement('img');
-                                fileIcon.src = '/resources/file.svg';
-                                fileIcon.className = 'cursor-pointer';
-                                fileIcon.alt = 'File Attachment';
-                                fileIcon.style.width = '2rem'; 
-                                
-                                const fileName = document.createElement('div');
-                                fileName.className = 'text-sm mt-1 text-gray-900 dark:text-white';
-                                fileName.textContent = message.og_attachment_name;
+                                const editOption = document.createElement('li');
+                                const editLink = document.createElement('a');
+                                editLink.href = '#';
+                                editLink.className = 'block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white';
+                                editLink.textContent = 'Edit';
+                                editOption.appendChild(editLink);
 
-                                fileIcon.onclick = () => {
-                                    const link = document.createElement('a');
-                                    link.href = `/chatFiles/${message.attachment_unique_id}`;
-                                    link.download = message.og_attachment_name;
-                                    link.click();
-                                };
+                                const deleteOption = document.createElement('li');
+                                const deleteLink = document.createElement('a');
+                                deleteLink.href = '#';
+                                deleteLink.className = 'delete-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white';
+                                deleteLink.textContent = 'Delete';
+                                deleteOption.appendChild(deleteLink);
 
-                                attachmentContainer.appendChild(fileIcon);
-                                attachmentContainer.appendChild(fileName);
+                                dropdownList.appendChild(editOption);
+                                dropdownList.appendChild(deleteOption);
                             }
 
-                            chatContent.appendChild(attachmentContainer);
-                        }
+                            dropdownMenu.appendChild(dropdownList);
 
-                        chatComponent.appendChild(profileImage);
-                        chatComponent.appendChild(chatContent);
+                            header.appendChild(userName);
+                            header.appendChild(timestamp);
+                            header.appendChild(menuButton);
+                            header.appendChild(dropdownMenu);
 
-                        chatMessagesContainer.appendChild(chatComponent);
+                            chatContent.appendChild(header);
+
+                            const chatText = document.createElement('p');
+                            chatText.id = 'postChatText';
+                            chatText.className = 'text-sm font-normal py-2.5 text-gray-900 dark:text-white';
+                            chatText.textContent = message.chat_text;
+
+                            chatContent.appendChild(chatText);
+
+                            // Render attachment if exists
+                            if (message.attachment_unique_id) {
+                                const attachmentContainer = document.createElement('div');
+                                attachmentContainer.className = 'mt-2';
+
+                                if (message.attachment_type.startsWith('image/')) {
+                                    const imagePreview = document.createElement('img');
+                                    imagePreview.src = `/chatFiles/${message.attachment_unique_id}`;
+                                    imagePreview.style.width = '60%';
+                                    imagePreview.style.maxWidth = '500px';
+                                    imagePreview.style.minWidth = '200px';
+                                    imagePreview.className = 'cursor-pointer';
+
+                                    imagePreview.onclick = () => openModal(`/chatFiles/${message.attachment_unique_id}`);
+
+                                    attachmentContainer.appendChild(imagePreview);
+                                } else {
+                                    const fileIcon = document.createElement('img');
+                                    fileIcon.src = '/resources/file.svg';
+                                    fileIcon.className = 'cursor-pointer';
+                                    fileIcon.alt = 'File Attachment';
+                                    fileIcon.style.width = '4rem';
+
+                                    const fileName = document.createElement('div');
+                                    fileName.className = 'text-sm mt-1 text-gray-900 dark:text-white';
+                                    fileName.textContent = message.og_attachment_name;
+
+                                    fileIcon.onclick = () => {
+                                        const link = document.createElement('a');
+                                        link.href = `/chatFiles/${message.attachment_unique_id}`;
+                                        link.download = message.og_attachment_name;
+                                        link.click();
+                                    };
+
+                                    attachmentContainer.appendChild(fileIcon);
+                                    attachmentContainer.appendChild(fileName);
+                                }
+
+                                chatContent.appendChild(attachmentContainer);
+                            }
+
+                            chatComponent.appendChild(profileImage);
+                            chatComponent.appendChild(chatContent);
+
+                            chatMessagesContainer.appendChild(chatComponent);
+
+                            // Add event listener to toggle the dropdown menu visibility
+                            menuButton.addEventListener('click', (event) => {
+                                event.stopPropagation(); // Prevent the click event from bubbling up
+                                dropdownMenu.classList.toggle('hidden');
+                            });
+
+                            // Add event listener to the delete option
+                            const deleteLink = dropdownMenu.querySelector('.delete-link');
+                            if (deleteLink) {
+                                deleteLink.addEventListener('click', (event) => {
+                                    event.preventDefault(); // Prevent the default link behavior
+                                    const confirmation = confirm('Are you sure you want to delete the post?');
+                                    if (confirmation) {
+                                        deleteChatMessage(message.serial);
+                                    }
+                                });
+                            }
+                        });
+
+                        // Close all dropdowns if clicking outside of them
+                        document.addEventListener('click', (event) => {
+                            document.querySelectorAll('.dropdown-menu').forEach((menu) => {
+                                if (!menu.classList.contains('hidden') && !menu.contains(event.target)) {
+                                    menu.classList.add('hidden');
+                                }
+                            });
+                        });
                     });
                 })
-                .catch(error => console.error('Error fetching chat messages:', error));
+                .catch(error => {
+                    console.error('Error fetching chat messages:', error);
+                });
+        }
+
+
+
+
+
+        function renderActiveServer() {
+            fetch('/getActiveServer')
+                .then(response => response.json())
+                .then(data => {
+                    const serverName = data.serverName;
+
+                    const serverNameElement = document.getElementById('currentServerTitle');
+
+                    if (serverName) {
+                        serverNameElement.textContent = `${serverName}`; // Display serverName
+                    } else {
+                        serverNameElement.textContent = `Active Server: Not found`; // Update message if not found
+                        console.log('No active server found for this user.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching active server:', error);
+                });
+        }
+
+
+
+
+        function deleteChatMessage(serial) {
+            console.log('Deleting post with serial:', serial); // Debugging line
+            fetch('/deletePost', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: serial }) // Use the serial number
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Remove the post from the DOM
+                        document.querySelector(`.post-${serial}`).remove();
+                    } else {
+                        console.error('Failed to delete post:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error deleting post:', error));
         }
 
         // Function to open a modal for image preview
@@ -992,7 +1195,6 @@
             location.reload();
         }
 
-
         // Event listener for chat input submission (assuming an Enter key press)
         document.getElementById('chatInput').addEventListener('keydown', function (event) {
             if (event.key === 'Enter') {
@@ -1002,7 +1204,6 @@
 
         // Initial fetch of chat messages when page loads
         fetchChatMessages();
-
 
         // Function to submit chat message
         function submitChatMessage() {
@@ -1030,6 +1231,7 @@
                         document.getElementById('chatAttachmentInput').value = ''; // Clear the file input
                         fetchChatMessages(); // Fetch updated chat messages
                         refreshDOM();
+                        renderActiveServer();
                         //refreshPage();
                     } else {
                         console.error('Error submitting chat message');
@@ -1038,7 +1240,246 @@
                 .catch(error => console.error('Error:', error));
         }
 
+
+        // Server Images w/ scrolling and event listeners for server switching
+        // Function to create a server image component
+        function createServerImage(serverName, attachmentUniqueId) {
+            const serverImagesContainer = document.getElementById('serverImagesContainer');
+
+            // Create container for the image
+            const containerDiv = document.createElement('div');
+            containerDiv.style.height = '3rem'; // Container height
+            containerDiv.style.width = '3rem'; // Container width
+            containerDiv.style.borderRadius = '50%'; // Make container circular
+            containerDiv.style.margin = '0.5rem auto'; // Top and bottom margins, left and right margins are auto
+            containerDiv.style.overflow = 'hidden'; // Hide any overflow
+            containerDiv.className = 'flex items-center bg-gray-300 dark:bg-zinc-953 cursor-pointer focus:ring-blue-500 focus:ring-4 hover:bg-gray-600 hover:text-blue-700'; // Apply styling class
+
+            // Create image element
+            const imgElement = document.createElement('img');
+            imgElement.src = `/serverImage/${attachmentUniqueId}`; // Secure endpoint for image
+            imgElement.alt = serverName;
+            imgElement.title = serverName;
+            imgElement.style.height = '80%'; // Image height
+            imgElement.style.width = '80%'; // Image width
+            imgElement.style.margin = "auto";
+            imgElement.style.objectFit = 'cover'; // Cover the container without distortion
+
+            // Create hover text for accessibility
+            const hoverText = document.createElement('span');
+            hoverText.className = 'sr-only';
+            hoverText.textContent = serverName;
+            containerDiv.appendChild(hoverText);
+
+            // Append image to the container
+            containerDiv.appendChild(imgElement);
+
+            // Add click event listener to the container
+            containerDiv.addEventListener('click', () => {
+                // Send the server name to your endpoint
+                fetch('/switchServer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ serverName }), // Send the server name
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json(); // Parse JSON response if needed
+                    })
+                    .then(data => {
+                        console.log('Success:', data); // Handle success response if needed
+                        fetchChatMessages();
+                        refreshDOM();
+                        renderActiveServer();
+                        //refreshPage()
+
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error); // Handle error response
+                    });
+            });
+
+            // Append container to the serverImagesContainer
+            serverImagesContainer.appendChild(containerDiv);
+        }
+
+
+
+        // DEFAULT SERVER
+        document.getElementById('defaultServerButton').addEventListener('click', async () => {
+            const serverName = "Treyark"; // Hardcoded server name
+
+            try {
+                // Send the serverName to the server via POST request
+                const response = await fetch('/switchServer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ serverName }), // Send the hardcoded server name
+                });
+
+                // Parse the response
+                const result = await response.json();
+
+                if (response.ok) {
+                    console.log('Server switched successfully:', result.message);
+                    // Optional: Add UI feedback like highlighting the active server
+                    fetchChatMessages();
+                    refreshDOM();
+                    renderActiveServer();
+                    //refreshPage()
+
+
+                } else {
+                    console.error('Error switching server:', result.message);
+                }
+            } catch (error) {
+                console.error('Request failed:', error);
+            }
+        });
+
+
+        //addChatUser--------------------IN
+
+
+        // Function to show the modal
+        function showAddChatUserModal() {
+            document.getElementById('addChatUserModal').style.display = 'flex';
+        }
+
+        // Function to hide the modal
+        function hideAddChatUserModal() {
+            document.getElementById('addChatUserModal').style.display = 'none';
+        }
+
+        // Event listener for the button to open the modal
+        document.getElementById('addChatUserBtn').addEventListener('click', function () {
+            showAddChatUserModal();
+        });
+
+        // Event listener for clicking outside the form to close the modal
+        document.getElementById('addChatUserModal').addEventListener('click', function (event) {
+            //const modal = document.getElementById('addChatUserModal');
+            const modalContent = document.getElementById('addUserForm');
+
+            // Check if the click is outside the form (modal content)
+            if (!modalContent.contains(event.target)) {
+                hideAddChatUserModal();
+            }
+        });
+        //addChatUser--------------------OUT
+
+
+
+        //deleteServer--------------------IN
+
+
+        // Function to show the modal
+        function showDeleteServerModal() {
+            document.getElementById('deleteServerModal').style.display = 'flex';
+        }
+
+        // Function to hide the modal
+        function hideDeleteServerModal() {
+            document.getElementById('deleteServerModal').style.display = 'none';
+        }
+
+        // Event listener for the button to open the modal
+        document.getElementById('deleteServerBtn').addEventListener('click', function () {
+            showDeleteServerModal();
+        });
+
+        // Event listener for clicking outside the form to close the modal
+        document.getElementById('deleteServerModal').addEventListener('click', function (event) {
+            //const modal = document.getElementById('addChatUserModal');
+            const modalContent = document.getElementById('deleteServerForm');
+
+            // Check if the click is outside the form (modal content)
+            if (!modalContent.contains(event.target)) {
+                hideDeleteServerModal();
+            }
+        });
+        //deleteServer--------------------OUT
+
+
+
+        document.getElementById('addChatUserSubmitBtn').addEventListener('click', function () {
+            // Collect form data
+            const userNameInput = document.getElementById('userNameInput').value;
+            const serverName2 = document.getElementById('serverName2').value; // Updated variable name
+
+            // Prepare data to send
+            const formData = {
+                userNameInput: userNameInput,
+                serverName: serverName2 // Retain this name for sending to the server
+            };
+
+            console.log('Sending Data:', formData); // Log what is being sent to the server
+
+            // Send data to the server using fetch
+            fetch('/add-chat-user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('User added successfully!');
+                        hideAddChatUserModal();  // Hide the modal on success
+                    } else {
+                        console.error('Ownership check failed:', data.message); // Log the error
+                        alert('Error adding user: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Catch and log any other errors
+                });
+        });
+
+        // Event listener for the delete server button
+        document.getElementById('deleteServerSubmitBtn').addEventListener('click', async () => {
+            const serverName = document.getElementById('serverName3').value;
+
+            if (!serverName) {
+                alert("Please enter a server name.");
+                return;
+            }
+
+            try {
+                const response = await fetch('/deleteServer', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ serverName }),
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert(result.message); // Success message
+                    hideDeleteServerModal(); // Hide modal
+                    // Optionally refresh the server list or update UI
+                } else {
+                    alert(result.error); // Show error message
+                }
+            } catch (error) {
+                console.error('Error deleting server:', error);
+            }
+        });
+
+
+        //DOM -------------------------------------------------------------------------------------DOM
         document.addEventListener('DOMContentLoaded', function () {
+
+            renderActiveServer();
 
             fetch('/fetchDefaultServerChannels')
                 .then(response => response.json())
@@ -1105,7 +1546,6 @@
         });
 
     </script>
-
 </body>
 
 </html>

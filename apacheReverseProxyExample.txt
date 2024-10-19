@@ -71,6 +71,9 @@ SSLCertificateKeyFile /etc/letsencrypt/live/example.com/privkey.pem
       ProxyPass "/userImage/" "http://localhost:3010/userImage/"
       ProxyPassReverse "/userImage/" "http://localhost:3010/userImage/"
 
+      ProxyPass "/serverImage/" "http://localhost:3010/serverImage/"
+      ProxyPassReverse "/serverImage/" "http://localhost:3010/serverImage/"
+
       ProxyPass "/fetchUserServers" "http://localhost:3010/fetchUserServers"
       ProxyPassReverse "/fetchUserServers" "http://localhost:3010/fetchUserServers"
 
@@ -98,8 +101,17 @@ SSLCertificateKeyFile /etc/letsencrypt/live/example.com/privkey.pem
       ProxyPass "/deletePost" "http://localhost:3010/deletePost"
       ProxyPassReverse "/deletePost" "http://localhost:3010/deletePost"
 
-      #ProxyPass "/" "http://localhost:3010/"
-      #ProxyPassReverse "/" "http://localhost:3010/"
+      ProxyPass "/switchServer" "http://localhost:3010/switchServer"
+      ProxyPassReverse "/switchServer" "http://localhost:3010/switchServer"
+
+      ProxyPass "/add-chat-user" "http://localhost:3010/add-chat-user"
+      ProxyPassReverse "/add-chat-user" "http://localhost:3010/add-chat-user"
+
+      ProxyPass "/getActiveServer" "http://localhost:3010/getActiveServer"
+      ProxyPassReverse "/getActiveServer" "http://localhost:3010/getActiveServer"
+
+      ProxyPass "/deleteServer" "http://localhost:3010/deleteServer"
+      ProxyPassReverse "/deleteServer   " "http://localhost:3010/deleteServer"
 
 
 </VirtualHost>

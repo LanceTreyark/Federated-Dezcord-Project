@@ -66,7 +66,8 @@ CREATE TABLE chat (
     user_name VARCHAR (50)   
     profile_picture VARCHAR(255),
     profile_headline TEXT,
-    user_bio TEXT
+    user_bio TEXT,
+    active_server VARCHAR(255)
 );
 
 
@@ -79,3 +80,6 @@ GRANT SELECT ON TABLE chat TO exampleUserHere;
 GRANT UPDATE ON TABLE chat TO exampleUserHere;
 
 GRANT DELETE ON TABLE chat TO exampleUserHere;
+
+INSERT INTO chat (user_id, server_name, server_id, channel_name, channel_id)
+VALUES (0, 'Sandbox', 'Cs7u1XshYuJDbVD80000', 'General', '0000Cs7u1XYuJDbVD8sh');
