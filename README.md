@@ -5,17 +5,16 @@
 
 ## 📑 Files List
 
-A) DIrectory for Google Auth/SSO.
-B) This is where we create variable names for Private keys we donn't want to share on the web.
-C)
-D)
-E)
-F)
-G)
-H)
-I)
-J)
-
+A) Directory for Google Auth/SSO.  
+B) This is where we create variable names for Private keys we don’t want to share on the web.  
+C)  
+D)  
+E)  
+F)  
+G)  
+H)  
+I)  
+J)  
 
 ---
 
