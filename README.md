@@ -1,6 +1,6 @@
-# Project Title
+# Project Dezcord
 
-![Project Logo](https://via.placeholder.com/150) <!-- Optional: Replace with project logo URL -->
+![Project Logo](https://dezcord.com/resources/preview.png) <!-- Optional: Replace with project logo URL -->
 
 ## 🚀 Overview
 
