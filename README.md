@@ -6,15 +6,15 @@
 ![Files Description Chart](https://github.com/LanceTreyark/Project-Dezcord/blob/main/public_html/resources/DezFiles2.png?raw=true) 
 
 A) Directory for Google Auth/SSO.  
-B) This is where we create variable names for Private keys we don’t want to share on the web.  
-C)  
-D)  
-E)  
-F)  
-G)  
-H)  
-I)  
-J)  
+B) This is where we create variable names for Private keys we don’t want to share on the web  
+C) This is the web root directory where our app lives  
+D) a README template, you can ignore it  
+E) Lists what we want to stay on our local machine and not get backed up to github  
+F) The open source license for this software. All copies need to pay respects to the original author ie: Treyark Media  
+G) This is a script that I use to commit to github you can ignore it  
+H) This README file  
+I) This is an example apache webserver configuration file with reverse proxy to all the app's endpoints  
+J) How the database is configured with original manual commands  
 
 ---
 
