@@ -95,5 +95,4 @@ For any inquiries or feedback, please feel free to reach out:
 - [Project Documentation](https://yourprojectdocs.com)
 - [Live Demo](https://yourprojectdemo.com)
 
-![Footer Image](https://github.com/LanceTreyark/Project-Dezcord/blob/main/public_html/resources/betaTest.png?raw=true) <!-- Optional: Replace with a footer image URL -->
-[https://github.com/LanceTreyark/Project-Dezcord/blob/main/public_html/resources/betaTest.png?raw=true](https://dezcord.com/)
+[![Try our demo](https://github.com/LanceTreyark/Project-Dezcord/blob/main/public_html/resources/betaTest.png?raw=true)](https://dezcord.com/)
