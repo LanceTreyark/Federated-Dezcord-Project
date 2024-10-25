@@ -4,8 +4,8 @@
 
 ## 🚀 Overview
 
-**Project Title** is a brief description of your project that explains its main purpose. Describe what it does and why it exists.
-
+**Project Dezcord** is an open source chat server modeled after Discord's User Interface. The project is currently in Beta, allows user's to change their username and profile picture, Create new servers, add users to these private servers and delete servers. Users can post or delete text, images and files that they contribute. The system provides password recovery by email and google login/SSO. 
+The purpose of this project is to maintain a free and open dialogue on the internet and maintain Americans 1st amendment right's regardless of who is in power or what the current flavor of "hate speech" or "misinformation", which is commonly understood to mean "ideas I don't like" or "exposing corrupt government behavior". 
 ---
 
 ## 📑 Table of Contents
