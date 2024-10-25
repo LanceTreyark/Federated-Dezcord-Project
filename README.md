@@ -1,7 +1,24 @@
 # Project Dezcord
 
 ![Project Logo](https://dezcord.com/resources/preview.png) <!-- Optional: Replace with project logo URL -->
-![Files Description Chart](https://github.com/LanceTreyark/Project-Dezcord/blob/main/public_html/resources/DezFiles2.png?raw=true) <!-- Optional: Replace with project logo URL -->
+![Files Description Chart](https://github.com/LanceTreyark/Project-Dezcord/blob/main/public_html/resources/DezFiles2.png?raw=true) 
+
+## 📑 Files List
+
+A.
+B.
+C.
+D.
+E.
+F.
+G.
+H.
+I.
+J.
+
+
+---
+
 
 ## 🚀 Overview
 
