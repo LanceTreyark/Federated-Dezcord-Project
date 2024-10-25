@@ -4,7 +4,7 @@
 
 ## 🚀 Overview
 
-*Project Dezcord** is an open source chat server modeled after Discord's User Interface.
+**Project Dezcord* is an open source chat server modeled after Discord's User Interface.
 ---
 
 ## 📑 Table of Contents
