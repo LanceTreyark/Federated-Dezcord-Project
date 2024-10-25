@@ -1,9 +1,9 @@
 # Project Dezcord
 
 ![Project Logo](https://dezcord.com/resources/preview.png) <!-- Optional: Replace with project logo URL -->
-![Files Description Chart](https://github.com/LanceTreyark/Project-Dezcord/blob/main/public_html/resources/DezFiles2.png?raw=true) 
 
 ## 📑 Files List
+![Files Description Chart](https://github.com/LanceTreyark/Project-Dezcord/blob/main/public_html/resources/DezFiles2.png?raw=true) 
 
 A) Directory for Google Auth/SSO.  
 B) This is where we create variable names for Private keys we don’t want to share on the web.  
