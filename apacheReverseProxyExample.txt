@@ -1,3 +1,5 @@
+## to enable reverse proxy, first run "sudo a2enmod proxy" in the Linux Command Line
+
 <IfModule mod_ssl.c>                                                                                                                                                                                                                                                  
 <VirtualHost *:443>
     ServerAdmin email@example.com
